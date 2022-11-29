@@ -1,0 +1,130 @@
+.coun_main_con{
+    width: 95%;
+     border: 1px solid rgba(198, 54, 56, 0.8);
+    height: 1361px;
+    border-radius: 25px;
+}
+.coun_head{
+    display: inline-block;
+}
+.counselling_head {
+    display: flex;
+    justify-content: space-between;
+    padding: 2%;
+}
+.countries_table{
+    width: 95%;
+    height: 371px;
+    box-shadow: var(--box-shadow1);
+    border-radius: 20px;
+    margin: 0 auto;
+}
+.button_addstd button {
+    width: 131px;
+    height: 38px;
+    background: #C63638;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    box-shadow: var(--box-shadow1);
+}
+.coun_tbl_heading {
+    display: flex;
+    justify-content: space-between;
+    padding: 2%;
+}
+.btn_add_std{
+font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    text-transform: capitalize;
+    color: #F2F3F2; 
+}
+/* .tr_head_coun{
+    display: flex;
+    justify-content: space-around;
+} */
+.tr_head_coun{
+    padding-left:  2%;
+    text-align: center;
+   color: #FFFFFF;
+    font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 1.4em;
+        line-height: 27px;
+        position: sticky;
+        
+}
+.std_name_coun {
+    width: 10vw;
+}
+.counselor_coun{
+  width: 10vw;
+}
+.course_coun{
+ width: 10vw;
+}
+.doe_coun{
+width: 10vw;
+} 
+.action_coun{
+width: 20vw;
+}
+
+.edit_icn_spn{
+    width: 1.3rem;
+    margin: 0% 4%;
+}
+.tbl_countries tbody {
+    /* overflow: auto; */
+       
+        width: 100%;
+        /* display: inline-block; */
+      
+       
+}
+.tbl_countries thead th {
+    position: sticky;
+    top: 0px;
+    background-color: rgba(41, 41, 41, 1);
+    z-index: -1;
+}
+.tbl_countries {
+    width: 100%;
+}
+.countries_table table {
+  width: 100%;
+}
+.th:nth-child(1) {
+    width: 20%;
+}
+.countries_table table td {
+    
+}
+.table_div {
+    max-height: 16em;
+    overflow-y: auto;
+        overflow-x: auto;
+}
+
+.countries_table table::-webkit-scrollbar {
+    width: 1px;
+
+}
+.mgtp_4 {
+    margin-top: 4%;
+}
+.showaddstd_maincon {
+    background: #104d5a42;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 400px;
+        height: 400px;
+}

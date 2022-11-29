@@ -1,0 +1,66 @@
+
+
+.select_tag {
+    /* max-width: ;
+    min-width: ; */
+    /* width: 6em; */
+    border: 1px solid rgba(198, 54, 56, 0.8);
+    outline: none;
+    background-color: rgba(41, 41, 41, 1);
+    border-radius: 10px;
+    color: #FFFFFF;
+}
+
+.univ_maincon {
+    width:92%;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #2B2B2B 0%, #272727 100%);
+        box-shadow: -8px 8px 16px rgba(19, 19, 19, 0.2), 8px -8px 16px rgba(19, 19, 19, 0.2), -8px -8px 16px rgba(63, 63, 63, 0.9), 8px 8px 20px rgba(19, 19, 19, 0.9), inset 1px 1px 2px rgba(63, 63, 63, 0.3), inset -1px -1px 2px rgba(19, 19, 19, 0.5);
+        border-radius: 20px;
+        height: 1057px;
+        margin-top: 8%;
+}
+
+.tx_dc_none {
+    text-decoration: none;
+}
+
+.univfirstcon , .univsecondcon {
+  padding: 2% 3%;
+  display: flex;
+  gap: 3%;
+}
+
+.univcon_first , .univcon_second , .univcon_third  , .univcon_fourth {
+    width: 48%;
+    padding: 3%;
+    padding-left: 5%;
+    padding-bottom: 1%;
+    box-sizing: border-box;
+    background: linear-gradient(135deg, #2B2B2B 0%, #272727 100%);
+        box-shadow: -8px 8px 16px rgba(19, 19, 19, 0.2), 8px -8px 16px rgba(19, 19, 19, 0.2), -8px -8px 16px rgba(63, 63, 63, 0.9), 8px 8px 20px rgba(19, 19, 19, 0.9), inset 1px 1px 2px rgba(63, 63, 63, 0.3), inset -1px -1px 2px rgba(19, 19, 19, 0.5);
+        border-radius: 20px;
+        
+        
+}
+.univcon_first:hover , .univcon_second:hover , .univcon_third:hover , .univcon_fourth:hover { 
+    transform: scale(1.1);
+}
+
+.univcon_first_head , .univcon_first_heading , .univcon_first_para {
+    font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 1.375em;
+        line-height: 27px;
+        color: #FFFFFF;
+}
+.univcon_first_heading {
+    font-weight: 600;
+
+}
+.univcon_first_para {
+    font-weight: 400;
+   opacity: 0.6;
+    font-size: 1.075em;
+}

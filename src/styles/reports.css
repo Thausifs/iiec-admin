@@ -1,0 +1,35 @@
+.std_btn {
+    background-color: rgba(198, 54, 56, 0.6);
+    border: 1px solid rgba(198, 54, 56, 0.97);
+    border-radius: 0.6em;
+    box-shadow: var(--box-shadow3);
+    padding: 1% 2%;
+    font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 1.2em;
+        text-align: center;
+        color: #F2F3F2;
+        margin-left: 5%;
+
+}
+.emp_btn {
+    background-color: #292929;
+    border: 1px solid rgba(198, 54, 56, 0.97);
+    border-radius: 0.6em;
+    box-shadow: var(--box-shadow3);
+    padding: 1% 2%;
+        font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 1.2em;
+        text-align: center;
+        color: #F2F3F2;
+        margin-left: 2%;
+}
+.rep_tbl_emp {
+    width: 100%;
+}
+.rep_tbl_emp td {
+    font-size: 1em;
+}

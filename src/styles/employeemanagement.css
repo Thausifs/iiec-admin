@@ -1,0 +1,82 @@
+.emp_head {
+    font-size: 1.375em;
+}
+.emp_searchpd {
+    height: 40px;
+        border-radius: 10px;
+}
+.btn_text_empmg {
+    font-size: 0.7em;
+
+}
+.btn_text_empmg:hover {
+    transform: scale(1.1);
+}
+.btn_text_export {
+    width: fit-content;
+
+}
+.btn_text_export:hover {
+    transform: scale(1.1);
+}
+.coun_main_con hr {
+    width: 90%;
+ border: 1px solid rgba(198, 54, 56, 0.5);
+ background-color:  rgba(198, 54, 56, 0.5);;
+}
+.emp_mg th {
+    font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 1.025em;
+        line-height: 22px;
+        text-align: center;
+        text-transform: capitalize;
+        color: #F2F3F2;
+}
+
+.tbl_empmg td {
+ font-size: 1em;
+}
+
+.tbl_emp_management {
+    max-height: 90%;
+        overflow-y: auto;
+        overflow-x: auto;
+}
+
+.emp_mg thead th {
+    position: sticky;
+    top: 0px;
+    background-color: rgba(41, 41, 41, 1);
+    z-index: 1;
+}
+.editfile_icon {
+    width: 1.3em;
+}
+.virtual_card_icon {
+    width: 1.3em;
+}
+.emp_mg {
+    width: 100%;
+}
+.head_crt_emp {
+    display: flex;
+    justify-content: space-between;
+}
+.dlt_edit_td {
+    display: flex;
+    gap: 10%;
+}
+.attendance_selecttag{
+    color: rgba(242, 242, 242, 0.7);
+    width: 85%;
+    margin: 0.5% auto;
+    margin-left: 7%;
+}
+.att_placehld{
+    margin-left:7% ;
+}
+#edit_attendance::placeholder {
+    color: rgba(242, 242, 242, 0.7);
+}

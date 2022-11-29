@@ -1,0 +1,110 @@
+.personalinf_div {
+    border: 1px solid rgba(198, 54, 56, 0.8);
+    padding: 3%;
+    box-sizing: border-box  ;
+    width: 95%;
+    border-radius: 25px;
+    margin: 0 auto;
+}
+.per_inf_head {
+    font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 1.25em ;
+        line-height: 24px;
+        color: #F2F3F2;
+}
+.dls_flx{
+    display: flex;
+    align-items: center;
+}
+.per_inf_first_tbl , .per_inf_second_tbl , .per_inf_third_tbl  {
+    width: 33%;
+}
+.per_inf_inptext{
+    font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 1em;
+        line-height: 20px;
+        color: #F2F3F2;
+}
+.per_inf_input {
+    background: #292929;
+        border: 1px solid rgba(198, 54, 56, 0.8);
+        box-shadow: -5px 5px 10px rgba(28, 28, 28, 0.2), 5px -5px 10px rgba(28, 28, 28, 0.2), -5px -5px 10px rgba(54, 54, 54, 0.9), 5px 5px 13px rgba(28, 28, 28, 0.9), inset 1px 1px 2px rgba(54, 54, 54, 0.3), inset -1px -1px 2px rgba(28, 28, 28, 0.5);
+        border-radius: 8px;
+        font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 1em;
+            line-height: 20px;
+            color: #F2F3F2;
+                height: 2.5em;
+}
+.dls_flex{
+    display: flex;
+  
+}
+.ml_5 {
+    margin-left: 2em;
+}
+.mr_4 {
+    margin-right: 0.5em;
+}
+.fz_20{
+    font-size: 1.25em;
+}
+.adrdetails_first{
+    width: 70%;
+}
+.adrdetails_second {
+    width: 30%;
+}
+.width_lg {
+    width: 85%;
+}
+
+.ml_10 {
+    margin-left: 40%;
+}
+.select_tag_inp {
+    width: 280%;
+}
+.select_tag_inp2 {
+    width: 160%;
+}
+.per_last-div {
+    width: 34%;
+}
+.per_last-div2 {
+    width: 66%;
+}
+.per_last-div input{
+    width: 80%;
+}
+.per_last-div2 input {
+    width: 50%;
+}
+.leadsbar_desc {
+    display: flex;
+    justify-content: space-around;
+    font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 1rem;
+        /* line-height: 20px; */
+        color: #FFFFFF;
+        
+}
+
+.leads_bar_div img {
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 4em;
+    
+    
+}
+.leads_bar_div{
+margin-bottom: 4em;
+}
