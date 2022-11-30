@@ -36,6 +36,9 @@ function EmployeeManagement() {
       let address = document.getElementById("address").value;
       let AttenDance = document.getElementById("attendance").value;
 
+      // if (Employee_name !== String) {
+      
+      // }
       let data = {
         Employee_Name: Employee_name,
         DOJ: Doj,

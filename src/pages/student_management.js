@@ -58,10 +58,11 @@ function StudentManagement() {
       };
       var Createstudent = await CreateStudent(data);
       const dataresponse = Createstudent;
-     
+
       if (!dataresponse.status) {
         alert(dataresponse.message);
         setshowaddstd2(false);
+        StudentData();
       } else {
         alert(dataresponse.data.message);
       }
@@ -91,16 +92,15 @@ function StudentManagement() {
         Status: Status,
         Courses: Courses,
       };
-   
+
       var Updatestudent = await UpdateStudent(data);
       const dataresponse = Updatestudent;
-     
+
       if (!dataresponse.status) {
         alert(dataresponse.message);
         setshoweditstd(false);
-       await StudentData();
+        await StudentData();
       } else {
-        
         alert(dataresponse.data.message);
       }
     } catch (error) {
@@ -114,7 +114,6 @@ function StudentManagement() {
     setshoweditstd(true);
 
     seteditstddata(r);
-   
   };
   const canceladdstd = () => {
     setshowaddstd2(false);
