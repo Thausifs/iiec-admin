@@ -8,6 +8,7 @@ import editfile from "../asserts/images/editfile.png";
 // import { employeemanagementdata } from "../data";
 import { EmployeeData } from "../apis/admin";
 import InputPlaceholder from "../components/inputplaceholder";
+import InputPlaceholder2 from "../components/inputplaceholder2";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { MdCancel } from "react-icons/md";
 import { CreateEmployee, EditEmployee , DeleteEmployee } from "../apis/admin";
@@ -43,6 +44,7 @@ function EmployeeManagement() {
         Address: address,
         Attendance: AttenDance,
       };
+      console.log(data);
       var CreateEmployEe = await CreateEmployee(data);
       const dataresponse = CreateEmployEe;
       if (!dataresponse.status) {
@@ -292,7 +294,7 @@ function EmployeeManagement() {
           <p className="placeholdertitle att_placehld">Attendance</p>
           <select
             name="Attendance"
-            id="edit_attendance"
+            id="attendance"
             className="placeholderinput attendance_selecttag"
           >
             <option value="True">True</option>
@@ -327,21 +329,21 @@ function EmployeeManagement() {
               onClick={() => canceleditemp()}
             />
           </div>
-          <InputPlaceholder
+          <InputPlaceholder2
             placehld="Employee_Name"
             id="edit_employee_name"
             callback={(event) =>
               seteditempdata({ Employee_Name: event.target.value })
             }
             value={editempdata.Employee_Name}
-          ></InputPlaceholder>
-          <InputPlaceholder
+          ></InputPlaceholder2>
+          <InputPlaceholder2
             placehld="DOJ"
             id="edit_doj"
             callback={(event) => seteditempdata({ DOJ: event.target.value })}
             value={editempdata.DOJ}
-          ></InputPlaceholder>
-          <InputPlaceholder
+          ></InputPlaceholder2>
+          <InputPlaceholder2
             placehld="Employee_Id"
             id="edit_employee_id"
             placeholder="Numbers are only allowed"
@@ -349,23 +351,23 @@ function EmployeeManagement() {
               seteditempdata({ Employee_Id: event.target.value })
             }
             value={editempdata.Employee_Id}
-          ></InputPlaceholder>
-          <InputPlaceholder
+          ></InputPlaceholder2>
+          <InputPlaceholder2
             placehld="counselling_Country"
             id="edit_counselling_country"
             callback={(event) =>
               seteditempdata({ counselling_Country: event.target.value })
             }
             value={editempdata.counselling_Country}
-          ></InputPlaceholder>
-          <InputPlaceholder
+          ></InputPlaceholder2>
+          <InputPlaceholder2
             placehld="Address"
             id="edit_address"
             callback={(event) =>
               seteditempdata({ Address: event.target.value })
             }
             value={editempdata.Address}
-          ></InputPlaceholder>
+          ></InputPlaceholder2>
           {
             // <InputPlaceholder
             //   placehld="Attendance"

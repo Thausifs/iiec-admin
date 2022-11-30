@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/componentcss/inputplaceholder.css";
 
-export default function InputPlaceholder({ id, placehld, placeholder, value, callback }) {
+export default function InputPlaceholder({ id, placehld, placeholder, value }) {
 
   return (
     <div className="inputplaceholder">
@@ -11,7 +11,7 @@ export default function InputPlaceholder({ id, placehld, placeholder, value, cal
         placeholder={placeholder}
         id={id}
         value={value}
-        onChange={(e) => callback(e)}
+        // onChange={(e) => callback(e)}
         className="placeholderinput"
       ></input>
     </div>
