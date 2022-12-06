@@ -388,11 +388,7 @@ overflow-y: auto;
             text-decoration-color: rgba(198, 54, 56, 0.5);
             text-underline-offset: 0.5rem;
 }
-.appcomp_th_name{
-    /* width: 15%; */
-    /* padding-left:10% ;
-    padding-right: 10% ; */
-}
+
 .appcomp_th_country{
     width: 15%;
 }
@@ -409,14 +405,7 @@ overflow-y: auto;
     /* display: block; */
     
 }
-.appcomp_table tbody {
 
-
-
-/* display: inline-block; */
-
-
-}
 .table_headfz {
     font-family: 'Montserrat';
         font-style: normal;
@@ -564,7 +553,7 @@ width: 10%; */
     width: 100%;
         color: #FFFFFF;
             opacity: 0.6;
-            font-size: 0.8em;
+            font-size: 1em;
             text-align: center;
     /* display: flex; */
     
@@ -639,8 +628,21 @@ height: 55%;
     justify-content: space-between;
     padding: 0% 5%;
 }
+::-webkit-scrollbar {
+    width: 0.5em;
+    height: 0.5em
+}
+::-webkit-scrollbar-track-piece {
+    background: rgba(41, 41, 41, 1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(110, 104, 104)
+}
+
+​{
 /* 
-@media only screen and (max-width: 1000px) and (min-width: 750px) {
+ @media only screen and (max-width: 1000px) and (min-width: 750px) {
 
     
     #root{
@@ -667,4 +669,4 @@ height: 55%;
          
 
         }
-} */
+} */}

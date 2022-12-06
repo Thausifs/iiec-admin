@@ -3,18 +3,18 @@ import Header from "../components/header";
 import "../styles/dashboard.css";
 import Sidebar from "../components/sidebar";
 import dashboard_icon from "../asserts/images/dashboard_icon.png";
-import edit_icon from "../asserts/images/edit_icon.png";
+// import edit_icon from "../asserts/images/edit_icon.png";
 import warning from "../asserts/images/warning.png";
 import approved from "../asserts/images/approved.png";
 import edit from "../asserts/images/edit.png";
 import list from "../asserts/images/list.png";
-import bar_1 from "../asserts/images/bar_1.png";
+// import bar_1 from "../asserts/images/bar_1.png";
 import bar_2 from "../asserts/images/bar_2.png";
 import leads_bar from "../asserts/images/leads_bar.png";
 import { applicationdata } from "../data";
 import { studentinterestdata } from "../data";
 import { enquirylist } from "../data";
-import table_1 from "../asserts/images/table_1.png";
+// import table_1 from "../asserts/images/table_1.png";
 import Charts from "../components/charts/charts";
 import Barcharts from "../components/charts/barchart";
 import Barcharts2 from "../components/charts/barchart2";
@@ -166,7 +166,7 @@ function Dashboard() {
             }
             <div className="leads_bar_div">
               {" "}
-              <img src={leads_bar}></img>
+              <img src={leads_bar} alt=""></img>
               <div className="leadsbar_desc">
                 <span>Education Details</span>
                 <span>University Finalized</span>

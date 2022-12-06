@@ -17,6 +17,8 @@ import delete_icon from "../asserts/images/delete_icon.png"
 function EmployeeManagement() {
   const [showcreateemp, setshowcreateemp] = useState(false);
   const [showeditemp, setshoweditemp] = useState(false);
+  const [deleteemppopup, setdeleteemppopup] = useState(false);
+    const [deleteempdata, setdeleteempdata] = useState();
   const [employeemanagementdata, setemployeemanagementdata] = useState([]);
   const [editempdata, seteditempdata] = useState([]);
 
@@ -132,12 +134,25 @@ function EmployeeManagement() {
   };
 
 
-  const Deleteemployee = async (r) => {
-     var deleteemployeeres = await DeleteEmployee(r);
-    console.log(deleteemployeeres);
-    EmployeesData();
-  }
-
+  // const Deleteemployee = async (r) => {
+  //    var deleteemployeeres = await DeleteEmployee(r);
+  //   console.log(deleteemployeeres);
+  //   EmployeesData();
+  // }
+   const Deleteemployee = async (deleteempdata) => {
+     var deleteemployeeres = await DeleteEmployee(deleteempdata);
+     console.log(deleteemployeeres);
+     setdeleteemppopup(false);
+     EmployeesData();
+   };
+   const Deleteemployeepopup = (r) => {
+     setdeleteemppopup(true);
+     setdeleteempdata(r);
+     
+   };
+   const Canceldeleteemployee = () => {
+     setdeleteemppopup(false);
+   };
   const virtualcard = () => {
     alert("Virtual card not set ");
   }
@@ -255,7 +270,7 @@ function EmployeeManagement() {
                             <img
                               className="edit_icn_spn"
                               src={delete_icon}
-                              onClick={() => Deleteemployee(r)}
+                              onClick={() => Deleteemployeepopup(r)}
                               alt=""
                             ></img>
                           </span>
@@ -321,7 +336,6 @@ function EmployeeManagement() {
           </div>
         </div>
       )}
-
       {showeditemp && (
         <div className="createstd_maincon">
           <div className="head_crt_emp">
@@ -407,7 +421,31 @@ function EmployeeManagement() {
             </button>
           </div>
         </div>
+      )}{" "}
+      ;
+      {deleteemppopup && (
+        <div className="popup_dlt">
+          <p>
+            Are you sure you want to delete the employee 
+            "{deleteempdata.Employee_Name}" ?
+          </p>
+          <div className="dltbtns_popup_div">
+            <button
+              className="Btn_create fz_14px"
+              onClick={() => Deleteemployee(deleteempdata)}
+            >
+              OK
+            </button>
+            <button
+              className="Btn_create fz_14px"
+              onClick={() => Canceldeleteemployee()}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
       )}
+      ;
     </div>
   );
 }

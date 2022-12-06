@@ -19,6 +19,8 @@ import {
 function StudentManagement() {
   const [showaddstd2, setshowaddstd2] = useState(false);
   const [showeditstd, setshoweditstd] = useState(false);
+  const [deletestdpopup, setdeletestdpopup] = useState(false);
+  const [deletestddata, setdeletestddata] = useState();
   const [studentsmgData, setstudentsmgData] = useState([]);
   const [editstddata, seteditstddata] = useState([]);
 
@@ -121,12 +123,21 @@ function StudentManagement() {
   const canceleditstd = () => {
     setshoweditstd(false);
   };
-  const Deletestudent = async (r) => {
-    var deletestudentres = await DeleteStudent(r);
+  const Deletestudent = async (deletestddata) => {
+    var deletestudentres = await DeleteStudent(deletestddata);
     console.log(deletestudentres);
+    setdeletestdpopup(false);
     StudentData();
   };
-
+  const Deletestudentpopup = (r) => {
+    
+    setdeletestdpopup(true);
+    setdeletestddata(r);
+   
+  };
+  const Canceldeletestudent = () => {
+   setdeletestdpopup(false);
+ }
   return (
     <div className="dashboardpg">
       <Header />
@@ -233,7 +244,7 @@ function StudentManagement() {
                             <img
                               className="edit_icn_spn"
                               src={delete_icon}
-                              onClick={() => Deletestudent(r)}
+                              onClick={() => Deletestudentpopup(r)}
                               alt=""
                             ></img>
                           </span>
@@ -385,6 +396,29 @@ function StudentManagement() {
           </div>
         </div>
       )}
+      {deletestdpopup && (
+        <div className="popup_dlt">
+          <p>
+            Are you sure you want to delete the student "
+            {deletestddata.Students_Name}" ?
+          </p>
+          <div className="dltbtns_popup_div">
+            <button
+              className="Btn_create fz_14px"
+              onClick={() => Deletestudent(deletestddata)}
+            >
+              OK
+            </button>
+            <button
+              className="Btn_create fz_14px"
+              onClick={() => Canceldeletestudent()}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+      ;
     </div>
   );
 }
