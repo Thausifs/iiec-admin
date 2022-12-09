@@ -5,28 +5,30 @@ import Sidebar from "../components/sidebar";
 import { studentmanagementdata } from "../data";
 import reports_icon from "../asserts/images/reports_icon.png";
 import { employeemanagementdata } from "../data";
-import InputPlaceholder from "../components/inputplaceholder";
+// import InputPlaceholder from "../components/inputplaceholder";
 import editfile from "../asserts/images/editfile.png";
 
 function Reports() {
   const [showstdreports, setshowstdreports] = useState(true);
   const [showempreports, setshowempreports] = useState(false);
-  // const [showaddstd2, setshowaddstd2] = useState(false);
-  const [showeditemp, setshoweditemp] = useState(false);
+  
 
  
   const EmpReports = () => {
     setshowstdreports(false);
     setshowempreports(true);
+    document.getElementById("emp_btnid").style.backgroundColor =
+      "rgb(198, 54, 56)";
+    document.getElementById("std_btnid").style.backgroundColor = "#292929";
   };
   const Stdreports = () => {
     setshowempreports(false);
     setshowstdreports(true);
+     document.getElementById("std_btnid").style.backgroundColor =
+       "rgb(198, 54, 56)";
+     document.getElementById("emp_btnid").style.backgroundColor = "#292929";
   };
-  const EditEmp = () => {
-    document.getElementById("std_btnid").style.backgroundColor = "blue";
-    setshoweditemp(true);
-  };
+ 
 
   return (
     <div className="dashboardpg">
@@ -230,32 +232,7 @@ function Reports() {
               </div>
             </div>
           )}
-          {showeditemp && (
-            <div className="createstd_maincon">
-              <h3 className="crt_std">Edit Employee</h3>
-              <InputPlaceholder placehld="First Name"></InputPlaceholder>
-              <InputPlaceholder placehld="Last Name"></InputPlaceholder>
-              <InputPlaceholder placehld="Gender"></InputPlaceholder>
-              <InputPlaceholder placehld="Country"></InputPlaceholder>
-              <InputPlaceholder placehld="Email"></InputPlaceholder>
-              <InputPlaceholder placehld="Password"></InputPlaceholder>
-              <InputPlaceholder placehld="Phone Number"></InputPlaceholder>
-              <InputPlaceholder placehld="Address"></InputPlaceholder>
-              <div style={{ display: "flex" }}>
-                <div style={{ width: "30%", margin: "4% 2% 2% 7%" }}>
-                  <p className="emp_photo">Employee Photo</p>
-                  <button className="btn_choose">Choose File</button>
-                </div>
-                <div className="Nofile_maincon">
-                  <div className="nofile_div">No File Chosen</div>
-                </div>
-              </div>
-
-              <div className="btm_div_create">
-                <button className="Btn_create">Create</button>
-              </div>
-            </div>
-          )}
+          
         </div>
       </div>
     </div>
