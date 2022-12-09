@@ -538,9 +538,7 @@ function Dashboard() {
             placehld="Counsellor"
             id="Counsellor"
           ></InputPlaceholder>
-          {
-            // <InputPlaceholder placehld="Status" id="Status"></InputPlaceholder>
-          }
+         
           <p className="placeholdertitle att_placehld">Status</p>
           <select
             name="Statusss"

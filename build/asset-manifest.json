@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.851232fe.css",
+    "main.js": "/static/js/main.e7971c15.js",
+    "static/media/leads_bar.png": "/static/media/leads_bar.a22dcdcd73227e7c952b.png",
+    "static/media/bar_2.png": "/static/media/bar_2.07223399b2a4acb52316.png",
+    "static/media/IIEC_logo.png": "/static/media/IIEC_logo.3e9c7f991eac9b3c75fd.png",
+    "index.html": "/index.html",
+    "main.851232fe.css.map": "/static/css/main.851232fe.css.map",
+    "main.e7971c15.js.map": "/static/js/main.e7971c15.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.851232fe.css",
+    "static/js/main.e7971c15.js"
+  ]
+}

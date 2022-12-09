@@ -43,10 +43,7 @@ font-family: 'Montserrat';
     text-transform: capitalize;
     color: #F2F3F2; 
 }
-/* .tr_head_coun{
-    display: flex;
-    justify-content: space-around;
-} */
+
 .tr_head_coun{
     padding-left:  2%;
     text-align: center;
@@ -102,9 +99,8 @@ width: 20vw;
 .th:nth-child(1) {
     width: 20%;
 }
-.countries_table table td {
-    
-}
+  
+
 .table_div {
     max-height: 16em;
     overflow-y: auto;
