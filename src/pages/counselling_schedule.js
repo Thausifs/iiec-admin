@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Header from "../components/header";
 import Sidebar from "../components/sidebar";
 import "../styles/counselling_schedule.css";
@@ -6,20 +6,18 @@ import counselling_schedule_icon from "../asserts/images/counselling_schedule_ic
 import edit_icon from "../asserts/images/edit_icon.png";
 import delete_icon from "../asserts/images/delete_icon.png";
 import disable_icon from "../asserts/images/disable_icon.png";
-import InputPlaceholder from "../components/inputplaceholder";
-import { MdCancel } from "react-icons/md";
 
 import msg_icon from "../asserts/images/msg_icon.png";
 import { applicationdata } from "../data";
 
 function CounsellingSchedule() {
-  const [showaddstd, setshowaddstd] = useState(false);
-  const canceladdstd = () => {
-    setshowaddstd(false);
-  };
-  const AddStudent = () => {
-    setshowaddstd(true);
-  };
+  // const [showaddstd, setshowaddstd] = useState(false);
+  // const canceladdstd = () => {
+  //   setshowaddstd(false);
+  // };
+  // const AddStudent = () => {
+  //   setshowaddstd(true);
+  // };
 
   return (
     <div className="dashboardpg">
@@ -283,39 +281,6 @@ function CounsellingSchedule() {
           </div>
         </div>
       </div>
-      {showaddstd && (
-        <div className="createstd_maincon">
-          <div className="head_crt_emp">
-            {" "}
-            <span className="crt_std">Create Student</span>
-            <MdCancel
-              style={{ color: "EA1E21", fontSize: "1.6em" }}
-              onClick={() => canceladdstd()}
-            />
-          </div>
-          <InputPlaceholder placehld="First Name"></InputPlaceholder>
-          <InputPlaceholder placehld="Last Name"></InputPlaceholder>
-          <InputPlaceholder placehld="Gender"></InputPlaceholder>
-          <InputPlaceholder placehld="Country"></InputPlaceholder>
-          <InputPlaceholder placehld="Email"></InputPlaceholder>
-          <InputPlaceholder placehld="Password"></InputPlaceholder>
-          <InputPlaceholder placehld="Phone Number"></InputPlaceholder>
-          <InputPlaceholder placehld="Address"></InputPlaceholder>
-          <div style={{ display: "flex" }}>
-            <div style={{ width: "30%", margin: "4% 2% 2% 7%" }}>
-              <p className="emp_photo">Employee Photo</p>
-              <button className="btn_choose">Choose File</button>
-            </div>
-            <div className="Nofile_maincon">
-              <div className="nofile_div">No File Chosen</div>
-            </div>
-          </div>
-
-          <div className="btm_div_create">
-            <button className="Btn_create">Create</button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

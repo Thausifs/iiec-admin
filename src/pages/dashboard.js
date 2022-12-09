@@ -511,7 +511,7 @@ function Dashboard() {
         </div>
       </div>
       {showaddstd2 && (
-        <div className="createstd_maincon " id="crtstd_dashboard">
+        <div className="createstd_maincondashboard " id="crtstd_dashboard">
           <div className="head_crt_emp">
             {" "}
             <span className="crt_std">Create Student</span>
