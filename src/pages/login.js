@@ -27,27 +27,23 @@ function Login() {
         Password: password,
       };
       await axios
-        .post("http://localhost:5000/admin/employeelogin", obj)
-          .then(function (response) {
-              if (response.data.message === "Employee login sucessful") {
-                
-                  localStorage.setItem(
-                      "Employee_Id",
-                      obj.Employee_Id
-                  );
-                  localStorage.setItem("Employee_Type", response.data.Data);
+        .post("http://100.26.42.249:5000/admin/employeelogin", obj)
+        .then(function (response) {
+          if (response.data.message === "Employee login sucessful") {
+            localStorage.setItem("Employee_Id", obj.Employee_Id);
+            localStorage.setItem("Employee_Type", response.data.Data);
 
-                  alert(response.data.message);
-                  return window.location.reload();
-              }
-              else if (response.data.message === "Authentication failed , Password didn't match") {
-                 return alert(response.data.message);
-              }
-              else if (response.data.message === "Employee not found") {
-                  return alert(response.data.message);
-              }
-              
-          })
+            alert(response.data.message);
+            return window.location.reload();
+          } else if (
+            response.data.message ===
+            "Authentication failed , Password didn't match"
+          ) {
+            return alert(response.data.message);
+          } else if (response.data.message === "Employee not found") {
+            return alert(response.data.message);
+          }
+        })
         .catch(function (error) {
           console.log(error.response.data.message);
           if (error.response.data.message === "Employee not found") {

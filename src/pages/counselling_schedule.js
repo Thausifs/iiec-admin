@@ -1,4 +1,4 @@
-import React , { useState} from "react";
+import React, { useState } from "react";
 import Header from "../components/header";
 import Sidebar from "../components/sidebar";
 import "../styles/counselling_schedule.css";
@@ -19,7 +19,7 @@ function CounsellingSchedule() {
   };
   const AddStudent = () => {
     setshowaddstd(true);
-   }
+  };
 
   return (
     <div className="dashboardpg">
@@ -42,9 +42,7 @@ function CounsellingSchedule() {
               <div className="coun_tbl_heading">
                 <span className="counselling_heading ">Finland</span>
                 <span className="button_addstd">
-                  <button className="btn_add_std" >
-                    add Student
-                  </button>
+                  <button className="btn_add_std">add Student</button>
                 </span>
               </div>
               <div className="table_div">
@@ -125,9 +123,7 @@ function CounsellingSchedule() {
               <div className="coun_tbl_heading">
                 <span className="counselling_heading ">Denmark</span>
                 <span className="button_addstd">
-                  <button className="btn_add_std" >
-                    add Student
-                  </button>
+                  <button className="btn_add_std">add Student</button>
                 </span>
               </div>
               <div className="table_div">
@@ -208,9 +204,7 @@ function CounsellingSchedule() {
               <div className="coun_tbl_heading">
                 <span className="counselling_heading ">Germany</span>
                 <span className="button_addstd">
-                  <button className="btn_add_std">
-                    add Student
-                  </button>
+                  <button className="btn_add_std">add Student</button>
                 </span>
               </div>
               <div className="table_div">
@@ -322,7 +316,6 @@ function CounsellingSchedule() {
           </div>
         </div>
       )}
-      
     </div>
   );
 }
