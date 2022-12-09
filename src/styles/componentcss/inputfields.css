@@ -1,0 +1,31 @@
+.input-container input {
+    width: 74%;
+    margin-bottom: .8rem;
+    padding-left: 25px;
+    background-size: 20px;
+    background-color: #292929;
+    outline: none;
+    /* border: 1px solid red; */
+    padding: 1rem 3rem;
+    color: #fff;
+    border-radius: 1rem;
+    -webkit-box-shadow: inset 0px 0px 19px 4px rgba(16, 16, 16, 1);
+    -moz-box-shadow: inset 0px 0px 19px 4px rgba(16, 16, 16, 1);
+    box-shadow: inset 0px 0px 19px 4px rgba(16, 16, 16, 1);
+}
+
+.input-container {
+    width: 100%;
+    position: relative;
+}
+
+.icon {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translate(-50%, -90%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #959595;
+}

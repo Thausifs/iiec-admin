@@ -65,7 +65,7 @@
     justify-content: space-between;
 }
 .dlt_edit_td {
-    display: flex;
+    /* display: flex; */
     gap: 10%;
 }
 .attendance_selecttag{
@@ -79,4 +79,7 @@
 }
 #edit_attendance::placeholder {
     color: rgba(242, 242, 242, 0.7);
+}
+.empbtn_addemp {
+    display: none;
 }

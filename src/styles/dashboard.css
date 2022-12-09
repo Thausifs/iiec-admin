@@ -639,7 +639,16 @@ height: 55%;
 ::-webkit-scrollbar-thumb {
     background: rgb(110, 104, 104)
 }
-
+.useraddicon {
+    margin-left: 0.6em;
+    font-size: 1.4em;
+}
+.crtstd_dashboard {
+       
+}
+/* .crt_dashboardemp {
+    top: 750px ;
+} */
 ​{
 /* 
  @media only screen and (max-width: 1000px) and (min-width: 750px) {

@@ -21,11 +21,20 @@ function EmployeeManagement() {
     const [deleteempdata, setdeleteempdata] = useState();
   const [employeemanagementdata, setemployeemanagementdata] = useState([]);
   const [editempdata, seteditempdata] = useState([]);
-
+  const admintype = localStorage.getItem("Employee_Type");
   useEffect(() => {
     EmployeesData();
   }, []);
    
+    useEffect(() => {
+      if (admintype === "superadmin") {
+        document.getElementById("empbtn_addemp").style.display = "block";
+       
+      }
+      else if (admintype === "admin" || admintype === null) {
+        document.getElementById("empbtn_addemp").style.display = "none";
+      }
+    }, [admintype]);
    
   const createemp = async () => {
     try {
@@ -36,7 +45,7 @@ function EmployeeManagement() {
         "counselling_country"
       ).value;
       let address = document.getElementById("address").value;
-      let AttenDance = document.getElementById("attendance").value;
+      let password = document.getElementById("password").value;
 
       // if (Employee_name !== String) {
       
@@ -47,7 +56,7 @@ function EmployeeManagement() {
         Employee_Id: Employee_id,
         counselling_Country: Counselling_Country,
         Address: address,
-        Attendance: AttenDance,
+        Password: password,
       };
       console.log(data);
       var CreateEmployEe = await CreateEmployee(data);
@@ -77,7 +86,7 @@ function EmployeeManagement() {
         "edit_counselling_country"
       ).value;
       let address = document.getElementById("edit_address").value;
-      let AttenDance = document.getElementById("edit_attendance").value;
+      let password = document.getElementById("edit_password").value;
          
       let data = {
         Employee_Name: Employee_name,
@@ -85,7 +94,7 @@ function EmployeeManagement() {
         Employee_Id: Employee_id,
         counselling_Country: Counselling_Country,
         Address: address,
-        Attendance: AttenDance,
+        Password: password,
       };
       console.log(data);
       var EditEmployEe = await EditEmployee(data);
@@ -143,15 +152,18 @@ function EmployeeManagement() {
      var deleteemployeeres = await DeleteEmployee(deleteempdata);
      console.log(deleteemployeeres);
      setdeleteemppopup(false);
+     document.getElementById("dashboardid").style.filter = "none";
      EmployeesData();
    };
-   const Deleteemployeepopup = (r) => {
+  const Deleteemployeepopup = (r) => {
+      document.getElementById("dashboardid").style.filter = "blur(5px)";
      setdeleteemppopup(true);
      setdeleteempdata(r);
      
    };
    const Canceldeleteemployee = () => {
      setdeleteemppopup(false);
+    document.getElementById("dashboardid").style.filter = "none";
    };
   const virtualcard = () => {
     alert("Virtual card not set ");
@@ -159,11 +171,11 @@ function EmployeeManagement() {
   return (
     <div className="dashboardpg pg_emp_mg">
       <Header />
-      <div className="second_con">
+      <div className="second_con" id="dashboardid">
         <div className="sidebar_con">
           <Sidebar />
         </div>
-        <div className="main_con">
+        <div className="main_con" id="dashboardid">
           <div className="maincon_heading">
             <img src={employeemg_icon} alt=""></img>
             <span>Employee Management</span>
@@ -175,7 +187,8 @@ function EmployeeManagement() {
               </span>
               <span className="button_addstd">
                 <button
-                  className="btn_add_std btn_text_empmg"
+                  className="btn_add_std btn_text_empmg "
+                  id="empbtn_addemp"
                   onClick={() => CreateEmp()}
                 >
                   Add new Employee
@@ -216,19 +229,17 @@ function EmployeeManagement() {
                   <th className="course_couns" width="10%">
                     Employee id
                   </th>
-                  <th className="doe_couns" width="14%">
+                  <th className="doe_couns" width="19%">
                     counselling Country
                   </th>
                   <th className="action_couns" width="15%">
                     Address
                   </th>
-                  <th className="action_couns" width="10%">
-                    Attendance
-                  </th>
+
                   <th className="action_couns" width="10%">
                     Virtual Card
                   </th>
-                  <th className="action_couns" width="10%">
+                  <th className="action_couns" width="15%">
                     Edit Profile
                   </th>
                 </thead>
@@ -249,7 +260,7 @@ function EmployeeManagement() {
                           {r.counselling_Country}
                         </td>
                         <td className="table_td">{r.Address}</td>
-                        <td className="table_td">{r.Attendance}</td>
+
                         <td>
                           <img
                             className="virtual_card_icon"
@@ -309,16 +320,21 @@ function EmployeeManagement() {
             id="counselling_country"
           ></InputPlaceholder>
           <InputPlaceholder placehld="Address" id="address"></InputPlaceholder>
-          <p className="placeholdertitle att_placehld">Attendance</p>
-          <select
-            name="Attendance"
-            id="attendance"
-            className="placeholderinput attendance_selecttag"
-          >
-            <option value="True">True</option>
-            <option value="False">False</option>
-          </select>
-
+          <InputPlaceholder
+            placehld="Password"
+            id="password"
+          ></InputPlaceholder>
+          {
+            // <p className="placeholdertitle att_placehld">Password</p>
+            // <select
+            //   name="Attendance"
+            //   id="attendance"
+            //   className="placeholderinput attendance_selecttag"
+            // >
+            //   <option value="True">True</option>
+            //   <option value="False">False</option>
+            // </select>
+          }
           <div style={{ display: "flex" }}>
             <div style={{ width: "30%", margin: "4% 2% 2% 7%" }}>
               <p className="emp_photo">Employee Photo</p>
@@ -361,12 +377,12 @@ function EmployeeManagement() {
             value={editempdata.DOJ}
           ></InputPlaceholder2>
           <InputPlaceholder2
-            placehld="Employee_Id"
+            placehld="Employee_Id ( Id not editable )"
             id="edit_employee_id"
-            placeholder="Numbers are only allowed"
-            callback={(event) =>
-              seteditempdata({ Employee_Id: event.target.value })
-            }
+            placeholder="Id not editable"
+            // callback={(event) =>
+            //   //  seteditempdata({ Employee_Id: event.target.value })
+            // }
             value={editempdata.Employee_Id}
           ></InputPlaceholder2>
           <InputPlaceholder2
@@ -385,6 +401,14 @@ function EmployeeManagement() {
             }
             value={editempdata.Address}
           ></InputPlaceholder2>
+          <InputPlaceholder2
+            placehld="Password"
+            id="edit_password"
+            callback={(event) =>
+              seteditempdata({ Password: event.target.value })
+            }
+            value={editempdata.Password}
+          ></InputPlaceholder2>
           {
             // <InputPlaceholder
             //   placehld="Attendance"
@@ -394,17 +418,16 @@ function EmployeeManagement() {
             //   }
             //   value={editempdata.Attendance}
             // ></InputPlaceholder>
+            // <p className="placeholdertitle att_placehld">Attendance</p>
+            // <select
+            //   name="Attendance"
+            //   id="edit_attendance"
+            //   className="placeholderinput attendance_selecttag"
+            // >
+            //   <option value="True">True</option>
+            //   <option value="False">False</option>
+            // </select>
           }
-          <p className="placeholdertitle att_placehld">Attendance</p>
-          <select
-            name="Attendance"
-            id="edit_attendance"
-            className="placeholderinput attendance_selecttag"
-          >
-            <option value="True">True</option>
-            <option value="False">False</option>
-          </select>
-
           <div style={{ display: "flex" }}>
             <div style={{ width: "30%", margin: "4% 2% 2% 7%" }}>
               <p className="emp_photo">Employee Photo</p>
@@ -417,7 +440,7 @@ function EmployeeManagement() {
 
           <div className="btm_div_create">
             <button className="Btn_create" onClick={Edit_Employee}>
-              Create
+              Edit
             </button>
           </div>
         </div>
@@ -426,8 +449,8 @@ function EmployeeManagement() {
       {deleteemppopup && (
         <div className="popup_dlt">
           <p>
-            Are you sure you want to delete the employee 
-            "{deleteempdata.Employee_Name}" ?
+            Are you sure you want to delete the employee "
+            {deleteempdata.Employee_Name}" ?
           </p>
           <div className="dltbtns_popup_div">
             <button

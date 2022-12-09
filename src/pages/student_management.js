@@ -15,6 +15,7 @@ import {
   UpdateStudent,
   DeleteStudent,
 } from "../apis/admin";
+import InputPlaceholder2 from "../components/inputplaceholder2";
 
 function StudentManagement() {
   const [showaddstd2, setshowaddstd2] = useState(false);
@@ -127,25 +128,27 @@ function StudentManagement() {
     var deletestudentres = await DeleteStudent(deletestddata);
     console.log(deletestudentres);
     setdeletestdpopup(false);
+    document.getElementById("dashboardid").style.filter = "none";
     StudentData();
   };
   const Deletestudentpopup = (r) => {
-    
+    document.getElementById("dashboardid").style.filter = "blur(5px)";
     setdeletestdpopup(true);
     setdeletestddata(r);
    
   };
   const Canceldeletestudent = () => {
-   setdeletestdpopup(false);
+    setdeletestdpopup(false);
+    document.getElementById("dashboardid").style.filter = "none";
  }
   return (
     <div className="dashboardpg">
       <Header />
-      <div className="second_con">
+      <div className="second_con" id="dashboardid">
         <div className="sidebar_con">
           <Sidebar />
         </div>
-        <div className="main_con">
+        <div className="main_con" id="dashboardid">
           <div className="maincon_heading">
             <img src={studentmg_icon} alt=""></img>
             <span>STUDENT MANAGEMENT</span>
@@ -294,7 +297,23 @@ function StudentManagement() {
             placehld="Counsellor"
             id="Counsellor"
           ></InputPlaceholder>
-          <InputPlaceholder placehld="Status" id="Status"></InputPlaceholder>
+          {
+            // <InputPlaceholder placehld="Status" id="Status"></InputPlaceholder>
+          }
+          <p className="placeholdertitle att_placehld">Status</p>
+          <select
+            name="Statusss"
+            id="Status"
+            className="placeholderinput attendance_selecttag"
+          >
+            <option value="Education Details">Education Details</option>
+            <option value="University Finalised">University Finalised</option>
+            <option value="Certificates Uploaded">Certificates Uploaded</option>
+            <option value="Visa Process">Visa Process</option>
+            <option value="Joining Date Finalised">
+              Joining Date Finalised
+            </option>
+          </select>
           <InputPlaceholder placehld="Courses" id="Courses"></InputPlaceholder>
 
           <div style={{ display: "flex" }}>
@@ -326,59 +345,75 @@ function StudentManagement() {
               onClick={() => canceleditstd()}
             />
           </div>
-          <InputPlaceholder
+          <InputPlaceholder2
             placehld="Student Name"
             id="edit_Student_Name"
             callback={(event) =>
               seteditstddata({ Students_Name: event.target.value })
             }
             value={editstddata.Students_Name}
-          ></InputPlaceholder>
-          <InputPlaceholder
+          ></InputPlaceholder2>
+          <InputPlaceholder2
             placehld="DOE"
             id="edit_DOE"
             callback={(event) => seteditstddata({ DOE: event.target.value })}
             value={editstddata.DOE}
-          ></InputPlaceholder>
-          <InputPlaceholder
-            placehld="Student Id"
+          ></InputPlaceholder2>
+          <InputPlaceholder2
+            placehld="Student Id ( ID not editable )"
             id="edit_Student_Id"
             placeholder="Numbers are only allowed"
-            callback={(event) =>
-              seteditstddata({ Student_Id: event.target.value })
-            }
+            // callback={(event) =>
+            //   seteditstddata({ Student_Id: event.target.value })
+            // }
             value={editstddata.Student_Id}
-          ></InputPlaceholder>
-          <InputPlaceholder
+          ></InputPlaceholder2>
+          <InputPlaceholder2
             placehld="Counselling Country"
             id="edit_Counselling_Country"
             callback={(event) =>
               seteditstddata({ Counselling_Country: event.target.value })
             }
             value={editstddata.Counselling_Country}
-          ></InputPlaceholder>
-          <InputPlaceholder
+          ></InputPlaceholder2>
+          <InputPlaceholder2
             placehld="Counsellor"
             id="edit_Counsellor"
             callback={(event) =>
               seteditstddata({ Counsellor: event.target.value })
             }
             value={editstddata.Counsellor}
-          ></InputPlaceholder>
-          <InputPlaceholder
-            placehld="Status"
+          ></InputPlaceholder2>
+          {
+            // <InputPlaceholder
+            //   placehld="Status"
+            //   id="edit_Status"
+            //   callback={(event) => seteditstddata({ Status: event.target.value })}
+            //   value={editstddata.Status}
+            // ></InputPlaceholder>
+          }
+          <p className="placeholdertitle att_placehld">Status</p>
+          <select
+            name="Status"
             id="edit_Status"
-            callback={(event) => seteditstddata({ Status: event.target.value })}
-            value={editstddata.Status}
-          ></InputPlaceholder>
-          <InputPlaceholder
+            className="placeholderinput attendance_selecttag"
+          >
+            <option value="Education Details">Education Details</option>
+            <option value="University Finalised">University Finalised</option>
+            <option value="Certificates Uploaded">Certificates Uploaded</option>
+            <option value="Visa Process">Visa Process</option>
+            <option value="Joining Date Finalised">
+              Joining Date Finalised
+            </option>
+          </select>
+          <InputPlaceholder2
             placehld="Courses"
             id="edit_Courses"
             callback={(event) =>
               seteditstddata({ Courses: event.target.value })
             }
             value={editstddata.Courses}
-          ></InputPlaceholder>
+          ></InputPlaceholder2>
           <div style={{ display: "flex" }}>
             <div style={{ width: "30%", margin: "4% 2% 2% 7%" }}>
               <p className="emp_photo">Student Photo</p>

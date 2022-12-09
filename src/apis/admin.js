@@ -130,3 +130,16 @@ export const DeleteEmployee = async (r) => {
 
   return Employee;
 };
+
+export const AllRegUsers = async () => {
+  const ViewallRegUsers = await Admins.get("/viewallreguser")
+    .then((res) => {
+      return res.data.Data;
+    })
+    .catch((err) => {
+      // alert(err.message);
+      return err.response;
+    });
+
+  return ViewallRegUsers;
+};

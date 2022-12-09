@@ -1,0 +1,113 @@
+.sign-in-btn {
+    background-color: rgba(236, 50, 55, 1);
+    -webkit-box-shadow: 0px 0px 19px 4px rgba(30, 43, 82, 1);
+    -moz-box-shadow: 0px 0px 19px 4px rgba(30, 43, 82, 1);
+    box-shadow: 0px 0px 19px 4px rgb(78, 43, 43);
+    border-radius: 12px;
+    color: #b39e9e;
+    font-weight: 900;
+    width: 50%;
+    padding: 1.8%;
+    margin-top: 3%;
+    border: 1px solid rgb(188, 38, 38);
+}
+.sign-in-btn:hover {
+    background-color: rgb(168, 34, 39);
+}
+
+.login-wrapper {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background: url('../assests/login.png'); */
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+    background-color: rgb(6 6 6 / 70%);
+    background-blend-mode: soft-light;
+    /*  */
+    position: relative;
+}
+
+.login-container {
+    width: 400px;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+    background-color: #292929;
+    border-radius: 10px;
+}
+
+/* .login-container input{
+    width: 100%;
+    margin-bottom: .8rem;
+    padding-left: 25px;
+    background-size: 20px;
+    } */
+
+
+.loin-logo {
+    height: 40px;
+    margin-bottom: 2rem;
+    filter: drop-shadow(0px 0px 65px #f2f2f2);
+}
+
+
+
+.login-wrapper h6 a {
+
+        color: #c63638;
+}
+
+.login-wrapper h6 {
+    font-weight: 400;
+    margin: 1rem 0 2rem 0;
+    color: #b39e9e;
+}
+
+.login-wrapper p {
+    color: #b39e9e;
+    margin-bottom: .3rem;
+    margin-top: 0.6em;
+}
+
+.login-wrapper h2 {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #fff;
+    /* line-height: 0.1em; */
+    margin: 25px 0 25px;
+    font-size: 14px;
+}
+
+.login-wrapper h2 span {
+    background: #292929;
+    padding: 0 10px;
+}
+
+
+.login-wrapper h6 a:hover {
+    text-decoration: underline;
+    color: #daa520;
+}
+
+
+.text-gray {
+    font-size: 14px;
+    text-align: left;
+    color: #9d9d9d;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    flex-grow: 1;
+    padding: 0.81rem;
+}
+
+.text-gray svg {
+    font-size: 20px;
+}

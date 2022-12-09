@@ -7,6 +7,7 @@ import EmployeeManagement from "./pages/employee_management";
 import StudentManagement from "./pages/student_management";
 import Leads from "./pages/leads";
 import Reports from './pages/reports';
+import Login from './pages/login';
 
 
 
@@ -17,7 +18,8 @@ function App() {
     //   <Dashboard />
     <Router>
       <Routes>
-        <Route exact path="/" element={<Dashboard />}></Route>{" "}
+        <Route exact path="/" element={<Login />}></Route>{" "}
+        <Route exact path="/dashboard" element={<Dashboard />}></Route>{" "}
         <Route
           exact
           path="/counselling-schedule"
@@ -35,11 +37,8 @@ function App() {
           element={<StudentManagement />}
         ></Route>
         <Route exact path="/leads" element={<Leads />}></Route>
-        <Route
-          exact
-          path="/reports"
-          element={<Reports />}
-        ></Route>
+        <Route exact path="/reports" element={<Reports />}></Route>
+        <Route exact path="/login" element={<Login />}></Route>
       </Routes>
     </Router>
   );
