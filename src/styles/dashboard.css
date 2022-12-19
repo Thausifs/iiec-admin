@@ -634,6 +634,7 @@ height: 55%;
     display: flex;
     justify-content: space-between;
     padding: 0% 5%;
+     align-items: center;
 }
 ::-webkit-scrollbar {
     width: 0.5em;
@@ -651,3 +652,46 @@ height: 55%;
     font-size: 1.4em;
 }
 
+.stdenqirydatadiv {
+    display: flex;
+    /* justify-content: space-between; */
+}
+.stdenqirydatafirstdiv {
+    width: 100%;
+}
+.stdenqirydataseconddiv {
+    width: 50%;
+  
+}
+.fd_fam {
+    font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: 400;
+        line-height: 100%;
+        /* text-transform: capitalize; */
+        color: #F2F3F2;
+        /* text-align: center; */
+        font-size: 1.2em;
+}
+.stddataspan{
+    margin-left: 2%;
+}
+.stddatainnerdiv {
+display: flex;
+    align-items: center;
+}
+.stddatatitlespan {
+    width: 50%;
+}
+.stdddatadiv {
+    display: flex;
+    margin: 2.2%;
+}
+.faminus{
+    padding-right: 0.5em;
+}
+.stddatamaindiv {
+    display: flex;
+    align-items: center;
+    /* gap: 3%; */
+}

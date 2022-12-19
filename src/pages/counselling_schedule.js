@@ -6,11 +6,12 @@ import counselling_schedule_icon from "../asserts/images/counselling_schedule_ic
 import edit_icon from "../asserts/images/edit_icon.png";
 import delete_icon from "../asserts/images/delete_icon.png";
 import disable_icon from "../asserts/images/disable_icon.png";
-
+import { Navigate } from "react-router-dom";
 import msg_icon from "../asserts/images/msg_icon.png";
 import { applicationdata } from "../data";
 
 function CounsellingSchedule() {
+   const admintype = localStorage.getItem("Employee_Type");
   // const [showaddstd, setshowaddstd] = useState(false);
   // const canceladdstd = () => {
   //   setshowaddstd(false);
@@ -18,6 +19,9 @@ function CounsellingSchedule() {
   // const AddStudent = () => {
   //   setshowaddstd(true);
   // };
+   if (!admintype) {
+     return <Navigate to="/login" />;
+   }
 
   return (
     <div className="dashboardpg">

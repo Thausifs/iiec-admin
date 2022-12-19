@@ -10,9 +10,9 @@ import { Navigate } from "react-router-dom";
 function Login() {
   const [Employeeid, setEmployeeid] = useState("");
   const [password, setpassword] = useState("");
-//   const [login, setlogin] = useState("");
+  //   const [login, setlogin] = useState("");
   let auth = localStorage.getItem("Employee_Id");
- 
+
   if (auth) {
     return <Navigate to="/dashboard" />;
   }
@@ -27,7 +27,7 @@ function Login() {
         Password: password,
       };
       await axios
-        .post("http://100.26.42.249:5000/admin/employeelogin", obj)
+        .post(`${process.env.REACT_APP_SERVER}/admin/employeelogin`, obj)
         .then(function (response) {
           if (response.data.message === "Employee login sucessful") {
             localStorage.setItem("Employee_Id", obj.Employee_Id);
@@ -60,9 +60,9 @@ function Login() {
         </div>
         <p>Welcome to IIEC</p>
         <h6>Sign in to continue</h6>
-              {
-                //   { login && login}
-              }
+        {
+          //   { login && login}
+        }
         <InputField
           icon={<BiUser />}
           placeholder="Employee_Id"

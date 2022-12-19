@@ -16,6 +16,7 @@ import {
   DeleteStudent,
 } from "../apis/admin";
 import InputPlaceholder2 from "../components/inputplaceholder2";
+import { Navigate } from "react-router-dom";
 
 function StudentManagement() {
   const [showaddstd2, setshowaddstd2] = useState(false);
@@ -24,6 +25,7 @@ function StudentManagement() {
   const [deletestddata, setdeletestddata] = useState();
   const [studentsmgData, setstudentsmgData] = useState([]);
   const [editstddata, seteditstddata] = useState([]);
+  const admintype = localStorage.getItem("Employee_Type");
 
   useEffect(() => {
     StudentData();
@@ -140,7 +142,10 @@ function StudentManagement() {
   const Canceldeletestudent = () => {
     setdeletestdpopup(false);
     document.getElementById("dashboardid").style.filter = "none";
- }
+  }
+  if (!admintype) {
+    return <Navigate to="/login" />;
+  }
   return (
     <div className="dashboardpg">
       <Header />

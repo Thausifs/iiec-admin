@@ -12,7 +12,8 @@ import InputPlaceholder2 from "../components/inputplaceholder2";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { MdCancel } from "react-icons/md";
 import { CreateEmployee, EditEmployee , DeleteEmployee } from "../apis/admin";
-import delete_icon from "../asserts/images/delete_icon.png"
+import delete_icon from "../asserts/images/delete_icon.png";
+import { Navigate } from "react-router-dom";
 
 function EmployeeManagement() {
   const [showcreateemp, setshowcreateemp] = useState(false);
@@ -22,10 +23,11 @@ function EmployeeManagement() {
   const [employeemanagementdata, setemployeemanagementdata] = useState([]);
   const [editempdata, seteditempdata] = useState([]);
   const admintype = localStorage.getItem("Employee_Type");
+ 
   useEffect(() => {
     EmployeesData();
   }, []);
-   
+    
     useEffect(() => {
       if (admintype === "superadmin") {
         document.getElementById("empbtn_addemp").style.display = "block";
@@ -168,6 +170,9 @@ function EmployeeManagement() {
   const virtualcard = () => {
     alert("Virtual card not set ");
   }
+   if (!admintype) {
+     return <Navigate to="/login" />;
+   }
   return (
     <div className="dashboardpg pg_emp_mg">
       <Header />

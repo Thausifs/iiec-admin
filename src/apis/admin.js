@@ -143,3 +143,16 @@ export const AllRegUsers = async () => {
 
   return ViewallRegUsers;
 };
+
+export const AplCompleted = async () => {
+  const APlcompleted = await Admins.get("/aplcompleted")
+    .then((res) => {
+      return res.data.Data;
+    })
+    .catch((err) => {
+      // alert(err.message);
+      return err.response;
+    });
+
+  return APlcompleted;
+};

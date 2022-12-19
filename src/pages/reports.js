@@ -7,25 +7,29 @@ import reports_icon from "../asserts/images/reports_icon.png";
 import { employeemanagementdata } from "../data";
 // import InputPlaceholder from "../components/inputplaceholder";
 import editfile from "../asserts/images/editfile.png";
+import { Navigate } from "react-router-dom";
 
 function Reports() {
   const [showstdreports, setshowstdreports] = useState(true);
   const [showempreports, setshowempreports] = useState(false);
   
-
+ const admintype = localStorage.getItem("Employee_Type");
+ if (!admintype) {
+   return <Navigate to="/login" />;
+ }
  
   const EmpReports = () => {
     setshowstdreports(false);
     setshowempreports(true);
     document.getElementById("emp_btnid").style.backgroundColor =
-      "rgb(198, 54, 56)";
+      "rgba(198, 54, 56, 0.6)";
     document.getElementById("std_btnid").style.backgroundColor = "#292929";
   };
   const Stdreports = () => {
     setshowempreports(false);
     setshowstdreports(true);
      document.getElementById("std_btnid").style.backgroundColor =
-       "rgb(198, 54, 56)";
+       "rgba(198, 54, 56, 0.6)";
      document.getElementById("emp_btnid").style.backgroundColor = "#292929";
   };
  

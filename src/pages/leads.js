@@ -1,12 +1,120 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/header";
 import "../styles/leads.css";
 import Sidebar from "../components/sidebar";
 import leads_icon from "../asserts/images/leads_icon.png";
 import warning from "../asserts/images/warning.png";
-import leads_bar from "../asserts/images/leads_bar.png";
+import tick from "../asserts/images/approved.png";
+import Pending from "../asserts/images/pending.png";
+import { Navigate } from "react-router-dom";
+import { Studentdata } from "../apis/admin";
 
 function Leads() {
+  const admintype = localStorage.getItem("Employee_Type");
+  const [studentsmgData, setstudentsmgData] = useState([]);
+  const [filtereddata, setfiltereddata] = useState([]);
+  const [selectedstd, setselectedstd] = useState([]);
+
+  const initialimg = {
+    imgone: false,
+    imgtwo: false,
+    imgthree: false,
+    imgfour: false,
+    imgfive: false,
+  };
+  const [imgarr, setimgarr] = useState({ initialimg });
+
+  
+    
+ 
+  
+  useEffect(() => {
+    StudentData();
+  }, []);
+
+  if (!admintype) {
+    return <Navigate to="/login" />;
+  }
+
+ 
+
+  const StudentData = async () => {
+    try {
+      var data = await Studentdata();
+
+      setstudentsmgData(data);
+    } catch (error) {
+      console.log("error while fetching data");
+    }
+  };
+
+  
+  const handleSearchchange = (e) => {
+    const filteredArray = studentsmgData.filter((r) =>
+      r.Students_Name.includes(e.target.value)
+    );
+    
+    setfiltereddata(filteredArray);
+    const value = e.target.value;
+    if (value) {
+      
+      const selectedstddata = studentsmgData.filter((r) =>
+        r.Students_Name === value
+      );
+      // console.log(selectedstddata);
+      if (selectedstddata.length > 0) {
+        setselectedstd(selectedstddata);
+        if (selectedstddata[0].Status === "Education Details") {
+          const imgdata = {
+            imgone: true,
+            imgtwo: false,
+            imgthree: false,
+            imgfour: false,
+            imgfive: false,
+          };
+          setimgarr(imgdata);
+        } else if (selectedstddata[0].Status === "University Finalised") {
+          const imgdata = {
+            imgone: true,
+            imgtwo: true,
+            imgthree: false,
+            imgfour: false,
+            imgfive: false,
+          };
+          setimgarr(imgdata);
+        } else if (selectedstddata[0].Status === "Certificates Uploaded") {
+          const imgdata = {
+            imgone: true,
+            imgtwo: true,
+            imgthree: true,
+            imgfour: false,
+            imgfive: false,
+          };
+          setimgarr(imgdata);
+        } else if (selectedstddata[0].Status === "Visa Process") {
+          const imgdata = {
+            imgone: true,
+            imgtwo: true,
+            imgthree: true,
+            imgfour: true,
+            imgfive: false,
+          };
+          setimgarr(imgdata);
+        } else if (selectedstddata[0].Status === "Joining Date Finalised") {
+          const imgdata = {
+            imgone: true,
+            imgtwo: true,
+            imgthree: true,
+            imgfour: true,
+            imgfive: true,
+          };
+          setimgarr(imgdata);
+        }
+      }
+    }
+  };
+
+  
   return (
     <div className="dashboardpg">
       <Header />
@@ -23,31 +131,88 @@ function Leads() {
             <ul className="ul_leads">
               <li className="leads_head">Student Leads</li>
               <li>
-                <input className="leads_input_pd" placeholder="Name"></input>
+                <input
+                  className="leads_input_pd"
+                  placeholder="Name"
+                  onChange={handleSearchchange}
+                  list="data"
+                  autoComplete="off"
+                ></input>
+                <datalist
+                  id="data"
+                  autoComplete="off"
+                  style={{ backgroundColor: "red" }}
+                >
+                  {filtereddata?.map((r, i) => {
+                    return (
+                      <>
+                        <option
+                          onSelect={(r) => selectedstd(r)}
+                          className="optstddata"
+                          key={i}
+                        >
+                          {r.Students_Name}
+                        </option>
+                      </>
+                    );
+                  })}
+                </datalist>
               </li>
             </ul>
             <ul className="lead_titles">
               <li>
-                Students : <span>Rajesh D</span>
+                Students : <span>{selectedstd[0]?.Students_Name}</span>
               </li>
               <li>
-                Consultant : <span>Kumar</span>
+                Consultant : <span>{selectedstd[0]?.Counsellor}</span>
               </li>
               <li>
-                Country : <span>USA</span>
+                Country : <span>{selectedstd[0]?.Counselling_Country}</span>
               </li>
             </ul>
-            {
-              // <div className="status_bar">
-              //   <span className="Circle_leads crl_1"></span>
-              //   <span className="Circle_leads crl_2"></span>
-              //   <span className="Circle_leads crl_3"></span>
-              //   <span className="Circle_leads crl_4"></span>
-              // </div>
-            }
+
             <div className="leads_bar_div">
               {" "}
-              <img src={leads_bar} alt=""></img>
+              {
+                // <img src={leads_bar} alt=""></img>
+              }
+              <div className="leadsbarmaindiv">
+                <div>
+                  {imgarr.imgone === true ? (
+                    <img src={tick} alt=""></img>
+                  ) : (
+                    <img src={Pending} alt=""></img>
+                  )}
+                </div>
+                <div>
+                  {imgarr.imgtwo === true ? (
+                    <img src={tick} alt=""></img>
+                  ) : (
+                    <img src={Pending} alt=""></img>
+                  )}
+                </div>
+                <div>
+                  {imgarr.imgthree === true ? (
+                    <img src={tick} alt=""></img>
+                  ) : (
+                    <img src={Pending} alt=""></img>
+                  )}
+                </div>
+                <div>
+                  {imgarr.imgfour === true ? (
+                    <img src={tick} alt=""></img>
+                  ) : (
+                    <img src={Pending} alt=""></img>
+                  )}
+                </div>
+                <div>
+                  {imgarr.imgfive === true ? (
+                    <img src={tick} alt=""></img>
+                  ) : (
+                    <img src={Pending} alt=""></img>
+                  )}
+                </div>
+              </div>
               <div className="leadsbar_desc">
                 <span>Education Details</span>
                 <span>University Finalized</span>
@@ -72,7 +237,10 @@ function Leads() {
             <div className="dls_flx">
               <div className="per_inf_first_tbl">
                 <p className="per_inf_inptext">First Name *</p>
-                <input className="per_inf_input"></input>
+                <input
+                  className="per_inf_input"
+                  placeholder={selectedstd[0]?.Students_Name}
+                ></input>
                 <p className="per_inf_inptext">Date Of Birth *</p>
                 <input className="per_inf_input"></input>
                 <p className="per_inf_inptext">Passport Number *</p>
@@ -82,9 +250,9 @@ function Leads() {
                 <div className="per_inf_first_tbl">
                   <p className="per_inf_inptext">MiddleName</p>
                   <input className="per_inf_input"></input>
-                  <p className="per_inf_inptext">ProfLanguage*</p>
+                  <p className="per_inf_inptext">Prof Language*</p>
                   <input className="per_inf_input"></input>
-                  <p className="per_inf_inptext">PassportExpiryDate</p>
+                  <p className="per_inf_inptext">Passport Expiry Date</p>
                   <input className="per_inf_input"></input>
                 </div>
               </div>
@@ -92,9 +260,9 @@ function Leads() {
                 <div className="per_inf_first_tbl">
                   <p className="per_inf_inptext">LastName</p>
                   <input className="per_inf_input"></input>
-                  <p className="per_inf_inptext">CountryofCitizenship*</p>
+                  <p className="per_inf_inptext">Country of Citizenship*</p>
                   <input className="per_inf_input"></input>
-                  <p className="per_inf_inptext">Maritalstatus*</p>
+                  <p className="per_inf_inptext">Marital status*</p>
                   <div className="dls_flex">
                     <span className="mr_4">
                       <input type="checkbox"></input>
