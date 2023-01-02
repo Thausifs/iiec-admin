@@ -163,7 +163,7 @@ function StudentManagement() {
     document.getElementById("dashboardid").style.filter = "none";
   };
   if (!admintype) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/" />;
   }
   const fileselected = async(r) => {
     let Student_Id = document.getElementById("edit_Student_Id").value;

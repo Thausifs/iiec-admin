@@ -33,7 +33,7 @@ function Leads() {
   }, []);
 
   if (!admintype) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/" />;
   }
 
  

@@ -24,26 +24,24 @@ function EmployeeManagement() {
   const [showcreateemp, setshowcreateemp] = useState(false);
   const [showeditemp, setshoweditemp] = useState(false);
   const [deleteemppopup, setdeleteemppopup] = useState(false);
-    const [deleteempdata, setdeleteempdata] = useState();
+  const [deleteempdata, setdeleteempdata] = useState();
   const [employeemanagementdata, setemployeemanagementdata] = useState([]);
   const [editempdata, seteditempdata] = useState([]);
-    const [editempimg, seteditempimg] = useState("");
+  const [editempimg, seteditempimg] = useState("");
   const admintype = localStorage.getItem("Employee_Type");
- 
+
   useEffect(() => {
     EmployeesData();
   }, []);
-    
-    useEffect(() => {
-      if (admintype === "superadmin") {
-        document.getElementById("empbtn_addemp").style.display = "block";
-       
-      }
-      else if (admintype === "admin" || admintype === null) {
-        document.getElementById("empbtn_addemp").style.display = "none";
-      }
-    }, [admintype]);
-   
+
+  useEffect(() => {
+    if (admintype === "superadmin") {
+      document.getElementById("empbtn_addemp").style.display = "block";
+    } else if (admintype === "admin" || admintype === null) {
+      document.getElementById("empbtn_addemp").style.display = "none";
+    }
+  }, [admintype]);
+
   const createemp = async () => {
     try {
       let Employee_name = document.getElementById("employee_name").value;
@@ -54,13 +52,13 @@ function EmployeeManagement() {
       ).value;
       let address = document.getElementById("address").value;
       let password = document.getElementById("password").value;
-   let image = document.getElementById("btn_choose_inputemp").files[0];
-  
-   if (image.size >= 2097152) {
-     return alert("images should be less than 2mb");
-   }
+      let image = document.getElementById("btn_choose_inputemp").files[0];
+
+      if (image.size >= 2097152) {
+        return alert("images should be less than 2mb");
+      }
       // if (Employee_name !== String) {
-      
+
       // }
       const StdData = new FormData();
       StdData.append("Employee_Name", Employee_name);
@@ -71,7 +69,6 @@ function EmployeeManagement() {
       StdData.append("Password", password);
       StdData.append("Image", image);
 
-
       // let data = {
       //   Employee_Name: Employee_name,
       //   DOJ: Doj,
@@ -80,7 +77,7 @@ function EmployeeManagement() {
       //   Address: address,
       //   Password: password,
       // };
-     
+
       var CreateEmployEe = await CreateEmployee(StdData);
       const dataresponse = CreateEmployEe;
       if (!dataresponse.status) {
@@ -90,17 +87,14 @@ function EmployeeManagement() {
       } else {
         alert(dataresponse.data.message);
       }
-       } catch (error) {
+    } catch (error) {
       alert("Error while creating Employee");
       console.log("Error while creating Employee");
     }
   };
 
   const Edit_Employee = async () => {
-
-
     try {
-     
       let Employee_name = document.getElementById("edit_employee_name").value;
       let Doj = document.getElementById("edit_doj").value;
       let Employee_id = document.getElementById("edit_employee_id").value;
@@ -109,7 +103,7 @@ function EmployeeManagement() {
       ).value;
       let address = document.getElementById("edit_address").value;
       let password = document.getElementById("edit_password").value;
-         
+
       let data = {
         Employee_Name: Employee_name,
         DOJ: Doj,
@@ -121,7 +115,7 @@ function EmployeeManagement() {
       console.log(data);
       var EditEmployEe = await EditEmployee(data);
       const dataresponse = EditEmployEe;
-     
+
       if (!dataresponse.status) {
         alert(dataresponse.message);
         setshoweditemp(false);
@@ -131,11 +125,8 @@ function EmployeeManagement() {
       }
     } catch (error) {
       alert("Error while updating the Employee");
-    
     }
   };
-      
-    
 
   const EmployeesData = async () => {
     try {
@@ -149,13 +140,12 @@ function EmployeeManagement() {
   // console.log(employeemanagementdata);
   const CreateEmp = () => {
     setshowcreateemp(true);
-  
   };
   const EditEmp = (r) => {
     setshoweditemp(true);
     seteditempdata(r);
     seteditempimg(r.Image);
-     window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const cancelcrtemp = () => {
@@ -165,47 +155,45 @@ function EmployeeManagement() {
     setshoweditemp(false);
   };
 
-   const Deleteemployee = async (deleteempdata) => {
-     var deleteemployeeres = await DeleteEmployee(deleteempdata);
-     console.log(deleteemployeeres);
-     setdeleteemppopup(false);
-     document.getElementById("dashboardid").style.filter = "none";
-     EmployeesData();
-   };
-  const Deleteemployeepopup = (r) => {
-      document.getElementById("dashboardid").style.filter = "blur(5px)";
-     setdeleteemppopup(true);
-     setdeleteempdata(r);
-     
-   };
-   const Canceldeleteemployee = () => {
-     setdeleteemppopup(false);
+  const Deleteemployee = async (deleteempdata) => {
+    var deleteemployeeres = await DeleteEmployee(deleteempdata);
+    console.log(deleteemployeeres);
+    setdeleteemppopup(false);
     document.getElementById("dashboardid").style.filter = "none";
-   };
+    EmployeesData();
+  };
+  const Deleteemployeepopup = (r) => {
+    document.getElementById("dashboardid").style.filter = "blur(5px)";
+    setdeleteemppopup(true);
+    setdeleteempdata(r);
+  };
+  const Canceldeleteemployee = () => {
+    setdeleteemppopup(false);
+    document.getElementById("dashboardid").style.filter = "none";
+  };
   const virtualcard = () => {
     alert("Virtual card not set ");
+  };
+  if (!admintype) {
+    return <Navigate to="/" />;
   }
-   if (!admintype) {
-     return <Navigate to="/login" />;
-  }
-   const fileselected = async (r) => {
-     let Employee_Id = document.getElementById("edit_employee_id").value;
-     let Image = document.getElementById("btn_choose_inputempedit").files[0];
-     if (Image.size >= 2097152) {
-       return alert("images should be less than 2mb");
-     }
-     // console.log(r.target.value);
+  const fileselected = async (r) => {
+    let Employee_Id = document.getElementById("edit_employee_id").value;
+    let Image = document.getElementById("btn_choose_inputempedit").files[0];
+    if (Image.size >= 2097152) {
+      return alert("images should be less than 2mb");
+    }
+    // console.log(r.target.value);
 
-     const EmpData = new FormData();
-     EmpData.append("Image", Image);
-     EmpData.append("Employee_Id", Employee_Id);
+    const EmpData = new FormData();
+    EmpData.append("Image", Image);
+    EmpData.append("Employee_Id", Employee_Id);
 
-     
-     let imgurl = await ImgUploadedEmp(EmpData);
-     console.log(imgurl.message);
-     console.log(imgurl.Data);
-     seteditempimg(imgurl.Data);
-   };
+    let imgurl = await ImgUploadedEmp(EmpData);
+    console.log(imgurl.message);
+    console.log(imgurl.Data);
+    seteditempimg(imgurl.Data);
+  };
   return (
     <div className="dashboardpg pg_emp_mg">
       <Header />

@@ -15,7 +15,7 @@ function Reports() {
   
  const admintype = localStorage.getItem("Employee_Type");
  if (!admintype) {
-   return <Navigate to="/login" />;
+   return <Navigate to="/" />;
  }
  
   const EmpReports = () => {

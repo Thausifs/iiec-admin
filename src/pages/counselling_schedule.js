@@ -20,7 +20,7 @@ function CounsellingSchedule() {
   //   setshowaddstd(true);
   // };
    if (!admintype) {
-     return <Navigate to="/login" />;
+     return <Navigate to="/" />;
    }
 
   return (

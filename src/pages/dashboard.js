@@ -82,7 +82,7 @@ function Dashboard() {
   }, []);
 
   if (!admintype) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/" />;
   }
 
   const handleSearchchange = (e) => {

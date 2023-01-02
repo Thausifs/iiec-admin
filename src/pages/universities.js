@@ -34,7 +34,7 @@ function Universities() {
  
  const admintype = localStorage.getItem("Employee_Type");
  if (!admintype) {
-   return <Navigate to="/login" />;
+   return <Navigate to="/" />;
  }
   const USAunivdata = alluniversitiesdata?.filter((el) => el.Country === "USA");
   const UKunivdata = alluniversitiesdata?.filter((el) => el.Country === "UK");
