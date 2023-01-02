@@ -50,7 +50,7 @@ function Leads() {
 
   
   const handleSearchchange = (e) => {
-    const filteredArray = studentsmgData.filter((r) =>
+    const filteredArray = studentsmgData?.filter((r) =>
       r.Students_Name.includes(e.target.value)
     );
     
@@ -58,7 +58,7 @@ function Leads() {
     const value = e.target.value;
     if (value) {
       
-      const selectedstddata = studentsmgData.filter((r) =>
+      const selectedstddata = studentsmgData?.filter((r) =>
         r.Students_Name === value
       );
       // console.log(selectedstddata);
@@ -301,13 +301,13 @@ function Leads() {
                   <div>
                     {" "}
                     <p className="per_inf_inptext ">Country *</p>
-                    <select className="per_inf_input select_tag_inp ">
+                    <select className="per_inf_input  ">
                       <option>India</option>
                     </select>
                   </div>
                   <div className="ml_10">
                     <p className="per_inf_inptext ">Province/State *</p>
-                    <select className="per_inf_input select_tag_inp2 mr_10">
+                    <select className="per_inf_input  mr_10">
                       <option>India</option>
                     </select>
                   </div>

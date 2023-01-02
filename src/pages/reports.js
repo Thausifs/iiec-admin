@@ -113,7 +113,7 @@ function Reports() {
                     </th>
                   </thead>
                   <tbody className="appcomp_tbody">
-                    {studentmanagementdata.map((r, i) => {
+                    {studentmanagementdata?.map((r, i) => {
                       return (
                         <tr key={i} className="tr_app_comp tbl_empmg">
                           <td className="appcomp_th_names table_td" width="20%">
@@ -195,7 +195,7 @@ function Reports() {
                     </th>
                   </thead>
                   <tbody className="appcomp_tbody">
-                    {employeemanagementdata.map((r, i) => {
+                    {employeemanagementdata?.map((r, i) => {
                       return (
                         <tr key={i} className="tr_app_comp tbl_empmg">
                           <td className="appcomp_th_names table_td" width="15%">

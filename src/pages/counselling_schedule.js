@@ -68,7 +68,7 @@ function CounsellingSchedule() {
                   </thead>
 
                   <tbody className="appcomp_tbody">
-                    {applicationdata.map((r, i) => {
+                    {applicationdata?.map((r, i) => {
                       return (
                         <tr key={i} className="tr_app_comp">
                           <td className="appcomp_th_names table_td" width="20%">
@@ -149,7 +149,7 @@ function CounsellingSchedule() {
                   </thead>
 
                   <tbody className="appcomp_tbody">
-                    {applicationdata.map((r, i) => {
+                    {applicationdata?.map((r, i) => {
                       return (
                         <tr key={i} className="tr_app_comp">
                           <td className="appcomp_th_names table_td" width="20%">
@@ -230,7 +230,7 @@ function CounsellingSchedule() {
                   </thead>
 
                   <tbody className="appcomp_tbody">
-                    {applicationdata.map((r, i) => {
+                    {applicationdata?.map((r, i) => {
                       return (
                         <tr key={i} className="tr_app_comp">
                           <td className="appcomp_th_names table_td" width="20%">

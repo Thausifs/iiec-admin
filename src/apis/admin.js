@@ -14,10 +14,10 @@ export const EmployeeData = async () => {
 };
 
 export const CreateEmployee = async (data) => {
-  //  console.log(data);
+  
   const CreateEmployee = await Admins.post(`/createEmployee`, data)
     .then((res) => {
-      console.log(res);
+     
       return res.data;
     })
     .catch((err) => {
@@ -54,11 +54,12 @@ export const Studentdata = async () => {
   return Studentdata;
 };
 
-export const CreateStudent = async (data) => {
-  //  console.log(data);
-  const CreateStudent = await Admins.post(`/createStudent`, data)
+export const CreateStudent = async (StdData) => {
+  // console.log(StdData);
+
+  const CreateStudent = await Admins.post(`/createStudent`, StdData)
     .then((res) => {
-      console.log(res);
+     
       return res.data;
     })
     .catch((err) => {
@@ -69,11 +70,11 @@ export const CreateStudent = async (data) => {
   return CreateStudent;
 };
 
-export const UpdateStudent = async (data) => {
+export const UpdateStudent = async (StdData) => {
   //  console.log(data);
-  const UpdateStudent = await Admins.post(`/UpdateStudent`, data)
+  const UpdateStudent = await Admins.post(`/UpdateStudent`, StdData)
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       return res.data;
     })
     .catch((err) => {
@@ -155,4 +156,25 @@ export const AplCompleted = async () => {
     });
 
   return APlcompleted;
+};
+export const ImgUploadedStd = async (StdData) => {
+  const ImgUploaded = await Admins.post("/addimagestd", StdData)
+    .then((res) => {
+    
+      return res.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+  return ImgUploaded;
+};
+export const ImgUploadedEmp = async (EmpData) => {
+  const ImgUploaded = await Admins.post("/addimageemp", EmpData)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+  return ImgUploaded;
 };

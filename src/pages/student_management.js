@@ -14,6 +14,7 @@ import {
   CreateStudent,
   UpdateStudent,
   DeleteStudent,
+  ImgUploadedStd,
 } from "../apis/admin";
 import InputPlaceholder2 from "../components/inputplaceholder2";
 import { Navigate } from "react-router-dom";
@@ -25,6 +26,7 @@ function StudentManagement() {
   const [deletestddata, setdeletestddata] = useState();
   const [studentsmgData, setstudentsmgData] = useState([]);
   const [editstddata, seteditstddata] = useState([]);
+  const [editstdimg , seteditstdimg] = useState("")
   const admintype = localStorage.getItem("Employee_Type");
 
   useEffect(() => {
@@ -51,17 +53,34 @@ function StudentManagement() {
       let Counsellor = document.getElementById("Counsellor").value;
       let Status = document.getElementById("Status").value;
       let Courses = document.getElementById("Courses").value;
+      let Image = document.getElementById("btn_choose_input").files[0];
+      
+      if (Image.size >= 2097152) {
+        return alert("images should be less than 2mb");
+      }
 
-      let data = {
-        Students_Name: Student_Name,
-        DOE: DOE,
-        Student_Id: Student_Id,
-        Counselling_Country: Counselling_Country,
-        Counsellor: Counsellor,
-        Status: Status,
-        Courses: Courses,
-      };
-      var Createstudent = await CreateStudent(data);
+      const StdData = new FormData();
+
+      StdData.append("Students_Name", Student_Name);
+      StdData.append("DOE", DOE);
+      StdData.append("Student_Id", Student_Id);
+      StdData.append("Counselling_Country", Counselling_Country);
+      StdData.append("Counsellor", Counsellor);
+      StdData.append("Status", Status);
+      StdData.append("Courses", Courses);
+      StdData.append("Image", Image);
+
+      // let data = {
+      //   Students_Name: Student_Name,
+      //   DOE: DOE,
+      //   Student_Id: Student_Id,
+      //   Counselling_Country: Counselling_Country,
+      //   Counsellor: Counsellor,
+      //   Status: Status,
+      //   Courses: Courses,
+      //   image: image,
+      // };
+      var Createstudent = await CreateStudent(StdData);
       const dataresponse = Createstudent;
 
       if (!dataresponse.status) {
@@ -117,8 +136,9 @@ function StudentManagement() {
   };
   const EditStudent = (r) => {
     setshoweditstd(true);
-
+    
     seteditstddata(r);
+    seteditstdimg(r.Image)
   };
   const canceladdstd = () => {
     setshowaddstd2(false);
@@ -137,14 +157,31 @@ function StudentManagement() {
     document.getElementById("dashboardid").style.filter = "blur(5px)";
     setdeletestdpopup(true);
     setdeletestddata(r);
-   
   };
   const Canceldeletestudent = () => {
     setdeletestdpopup(false);
     document.getElementById("dashboardid").style.filter = "none";
-  }
+  };
   if (!admintype) {
     return <Navigate to="/login" />;
+  }
+  const fileselected = async(r) => {
+    let Student_Id = document.getElementById("edit_Student_Id").value;
+    let Image = document.getElementById("btn_choose_inputedit").files[0];
+     if (Image.size >= 2097152) {
+        return alert("images should be less than 2mb");
+      }
+    // console.log(r.target.value);
+
+    const StdData = new FormData();
+    StdData.append("Image", Image);
+    StdData.append("Student_Id", Student_Id);
+    
+   console.log(StdData);
+    let imgurl = await ImgUploadedStd(StdData);
+    console.log(imgurl.message);
+    console.log(imgurl.Data);
+    seteditstdimg(imgurl.Data)
   }
   return (
     <div className="dashboardpg">
@@ -221,7 +258,7 @@ function StudentManagement() {
                   </th>
                 </thead>
                 <tbody className="appcomp_tbody">
-                  {studentsmgData.map((r, i) => {
+                  {studentsmgData?.map((r, i) => {
                     return (
                       <tr key={i} className="tr_app_comp tbl_empmg">
                         <td className="appcomp_th_names table_td" width="20%">
@@ -321,12 +358,14 @@ function StudentManagement() {
           </select>
           <InputPlaceholder placehld="Courses" id="Courses"></InputPlaceholder>
 
-          <div style={{ display: "flex" }}>
+          <div style={{ display: "flex" }} className="chosefilediv">
             <div style={{ width: "30%", margin: "4% 2% 2% 7%" }}>
               <p className="emp_photo">Student Photo</p>
-              <button className="btn_choose" onClick={createstd}>
-                Choose File
-              </button>
+              <input
+                type="file"
+                className="btn_chooseinp"
+                id="btn_choose_input"
+              ></input>
             </div>
             <div className="Nofile_maincon">
               <div className="nofile_div">No File Chosen</div>
@@ -422,16 +461,24 @@ function StudentManagement() {
           <div style={{ display: "flex" }}>
             <div style={{ width: "30%", margin: "4% 2% 2% 7%" }}>
               <p className="emp_photo">Student Photo</p>
-              <button className="btn_choose">Choose File</button>
+              <input
+                type="file"
+                className="btn_chooseinp"
+                id="btn_choose_inputedit"
+                onChange={(r) => fileselected(r)}
+              ></input>
             </div>
-            <div className="Nofile_maincon">
-              <div className="nofile_div">No File Chosen</div>
-            </div>
+            <img className="imgstdedit" src={editstdimg} alt=""></img>
+            {
+              // <div className="Nofile_maincon">
+              //   <div className="nofile_div">No File Chosen</div>
+              // </div>
+            }
           </div>
 
           <div className="btm_div_create">
             <button className="Btn_create" onClick={Editstd}>
-              Create
+              Update
             </button>
           </div>
         </div>

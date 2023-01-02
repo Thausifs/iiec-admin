@@ -11,7 +11,12 @@ import InputPlaceholder from "../components/inputplaceholder";
 import InputPlaceholder2 from "../components/inputplaceholder2";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { MdCancel } from "react-icons/md";
-import { CreateEmployee, EditEmployee , DeleteEmployee } from "../apis/admin";
+import {
+  CreateEmployee,
+  EditEmployee,
+  DeleteEmployee,
+  ImgUploadedEmp,
+} from "../apis/admin";
 import delete_icon from "../asserts/images/delete_icon.png";
 import { Navigate } from "react-router-dom";
 
@@ -22,6 +27,7 @@ function EmployeeManagement() {
     const [deleteempdata, setdeleteempdata] = useState();
   const [employeemanagementdata, setemployeemanagementdata] = useState([]);
   const [editempdata, seteditempdata] = useState([]);
+    const [editempimg, seteditempimg] = useState("");
   const admintype = localStorage.getItem("Employee_Type");
  
   useEffect(() => {
@@ -48,20 +54,34 @@ function EmployeeManagement() {
       ).value;
       let address = document.getElementById("address").value;
       let password = document.getElementById("password").value;
-
+   let image = document.getElementById("btn_choose_inputemp").files[0];
+  
+   if (image.size >= 2097152) {
+     return alert("images should be less than 2mb");
+   }
       // if (Employee_name !== String) {
       
       // }
-      let data = {
-        Employee_Name: Employee_name,
-        DOJ: Doj,
-        Employee_Id: Employee_id,
-        counselling_Country: Counselling_Country,
-        Address: address,
-        Password: password,
-      };
-      console.log(data);
-      var CreateEmployEe = await CreateEmployee(data);
+      const StdData = new FormData();
+      StdData.append("Employee_Name", Employee_name);
+      StdData.append("DOJ", Doj);
+      StdData.append("Employee_Id", Employee_id);
+      StdData.append("Counselling_Country", Counselling_Country);
+      StdData.append("Address", address);
+      StdData.append("Password", password);
+      StdData.append("Image", image);
+
+
+      // let data = {
+      //   Employee_Name: Employee_name,
+      //   DOJ: Doj,
+      //   Employee_Id: Employee_id,
+      //   counselling_Country: Counselling_Country,
+      //   Address: address,
+      //   Password: password,
+      // };
+     
+      var CreateEmployEe = await CreateEmployee(StdData);
       const dataresponse = CreateEmployEe;
       if (!dataresponse.status) {
         alert(dataresponse.message);
@@ -129,11 +149,12 @@ function EmployeeManagement() {
   // console.log(employeemanagementdata);
   const CreateEmp = () => {
     setshowcreateemp(true);
-    document.querySelector(".pg_emp_mg").styles.backgroundColor = "red";
+  
   };
   const EditEmp = (r) => {
     setshoweditemp(true);
     seteditempdata(r);
+    seteditempimg(r.Image);
      window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -144,12 +165,6 @@ function EmployeeManagement() {
     setshoweditemp(false);
   };
 
-
-  // const Deleteemployee = async (r) => {
-  //    var deleteemployeeres = await DeleteEmployee(r);
-  //   console.log(deleteemployeeres);
-  //   EmployeesData();
-  // }
    const Deleteemployee = async (deleteempdata) => {
      var deleteemployeeres = await DeleteEmployee(deleteempdata);
      console.log(deleteemployeeres);
@@ -172,7 +187,25 @@ function EmployeeManagement() {
   }
    if (!admintype) {
      return <Navigate to="/login" />;
-   }
+  }
+   const fileselected = async (r) => {
+     let Employee_Id = document.getElementById("edit_employee_id").value;
+     let Image = document.getElementById("btn_choose_inputempedit").files[0];
+     if (Image.size >= 2097152) {
+       return alert("images should be less than 2mb");
+     }
+     // console.log(r.target.value);
+
+     const EmpData = new FormData();
+     EmpData.append("Image", Image);
+     EmpData.append("Employee_Id", Employee_Id);
+
+     
+     let imgurl = await ImgUploadedEmp(EmpData);
+     console.log(imgurl.message);
+     console.log(imgurl.Data);
+     seteditempimg(imgurl.Data);
+   };
   return (
     <div className="dashboardpg pg_emp_mg">
       <Header />
@@ -249,7 +282,7 @@ function EmployeeManagement() {
                   </th>
                 </thead>
                 <tbody className="appcomp_tbody">
-                  {employeemanagementdata.map((r, i) => {
+                  {employeemanagementdata?.map((r, i) => {
                     return (
                       <tr key={i} className="tr_app_comp tbl_empmg">
                         <td className="appcomp_th_names table_td" width="20%">
@@ -262,7 +295,7 @@ function EmployeeManagement() {
                           {r.Employee_Id}
                         </td>
                         <td className="appcomp_th_dojs table_td">
-                          {r.counselling_Country}
+                          {r.Counselling_Country}
                         </td>
                         <td className="table_td">{r.Address}</td>
 
@@ -343,11 +376,17 @@ function EmployeeManagement() {
           <div style={{ display: "flex" }}>
             <div style={{ width: "30%", margin: "4% 2% 2% 7%" }}>
               <p className="emp_photo">Employee Photo</p>
-              <button className="btn_choose">Choose File</button>
+              <input
+                type="file"
+                className="btn_chooseinp"
+                id="btn_choose_inputemp"
+              ></input>
             </div>
-            <div className="Nofile_maincon">
-              <div className="nofile_div">No File Chosen</div>
-            </div>
+            {
+              // <div className="Nofile_maincon">
+              //   <div className="nofile_div">No File Chosen</div>
+              // </div>
+            }
           </div>
 
           <div className="btm_div_create">
@@ -396,7 +435,7 @@ function EmployeeManagement() {
             callback={(event) =>
               seteditempdata({ counselling_Country: event.target.value })
             }
-            value={editempdata.counselling_Country}
+            value={editempdata.Counselling_Country}
           ></InputPlaceholder2>
           <InputPlaceholder2
             placehld="Address"
@@ -436,11 +475,19 @@ function EmployeeManagement() {
           <div style={{ display: "flex" }}>
             <div style={{ width: "30%", margin: "4% 2% 2% 7%" }}>
               <p className="emp_photo">Employee Photo</p>
-              <button className="btn_choose">Choose File</button>
+              <input
+                type="file"
+                className="btn_chooseinp"
+                id="btn_choose_inputempedit"
+                onChange={(r) => fileselected(r)}
+              ></input>
             </div>
-            <div className="Nofile_maincon">
-              <div className="nofile_div">No File Chosen</div>
-            </div>
+            <img className="imgstdedit" src={editempimg} alt=""></img>
+            {
+              // <div className="Nofile_maincon">
+              //   <div className="nofile_div">No File Chosen</div>
+              // </div>
+            }
           </div>
 
           <div className="btm_div_create">

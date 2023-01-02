@@ -502,7 +502,7 @@ function Dashboard() {
                   </tr>
 
                   <tbody>
-                    {studentinterestdata.map((r, i) => {
+                    {studentinterestdata?.map((r, i) => {
                       return (
                         <tr key={i}>
                           <td className="stu_int_td">{r.course}</td>
@@ -542,7 +542,7 @@ function Dashboard() {
                   </thead>
 
                   <tbody className="appcomp_tbody">
-                    {applicationdata.map((r, i) => {
+                    {applicationdata?.map((r, i) => {
                       return (
                         <tr key={i} className="tr_app_comp">
                           <td className="appcomp_th_name table_td" width="30%">
@@ -641,7 +641,7 @@ function Dashboard() {
             <div className="tbl_std_int_tbody ht_chg">
               <table className="appcomp_table tb_enq_list">
                 <tbody>
-                  {AllUsersData.map((r, i) => {
+                  {AllUsersData?.map((r, i) => {
                     return (
                       <tr key={i} className="tr_enq_list">
                         <td className="" width="15%">

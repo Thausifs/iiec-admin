@@ -34,10 +34,28 @@
         color: rgba(242, 243, 242, 0.7);
 }
 
-.btn_choose {
-background-color: #380000;
+.btn_chooseinpt {
+/* background-color: #380000; */
 color: rgba(242, 243, 242, 0.7);
 font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.2em;
+    color: rgba(242, 243, 242, 0.7);
+    /* padding: 5% 14%; */
+    border: 1px solid #C63638;
+    border-radius: 0.6em;
+}
+.btn_chooseinp {
+    color: #F2F3F2;
+}
+.chosefilediv input {
+    color: #F2F3F2;
+}
+input[type=file]::file-selector-button {
+background-color: #5c0202;
+    color: rgba(242, 243, 242, 0.7);
+    font-family: 'Montserrat';
     font-style: normal;
     font-weight: 500;
     font-size: 1.2em;
@@ -45,6 +63,9 @@ font-family: 'Montserrat';
     padding: 5% 14%;
     border: 1px solid #C63638;
     border-radius: 0.6em;
+}
+input[type=file]::file-selector-button:hover {
+    background-color: #290404;
 }
 .btn_choose:hover {
     background-color: #840707;
@@ -118,4 +139,9 @@ display: flex;
 .dltbtns_popup_div {
     display: flex;
     justify-content: space-between;
+}
+.imgstdedit {
+    padding: 2%;
+    height: 9.375em;
+    width: 6.25em;
 }

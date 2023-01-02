@@ -18,7 +18,7 @@ function Universities() {
         var data = await ViewallUniversities();
 
         setalluniversitiesdata(data);
-        const USAunivdata = data.filter(
+        const USAunivdata = data?.filter(
           (el) => el.Country === "USA"
         );
         setshowuniversitiesdata(USAunivdata);
@@ -36,12 +36,12 @@ function Universities() {
  if (!admintype) {
    return <Navigate to="/login" />;
  }
-  const USAunivdata = alluniversitiesdata.filter((el) => el.Country === "USA");
-  const UKunivdata = alluniversitiesdata.filter((el) => el.Country === "UK");
-  const CANADAunivdata = alluniversitiesdata.filter(
+  const USAunivdata = alluniversitiesdata?.filter((el) => el.Country === "USA");
+  const UKunivdata = alluniversitiesdata?.filter((el) => el.Country === "UK");
+  const CANADAunivdata = alluniversitiesdata?.filter(
     (el) => el.Country === "CANADA"
   );
-  const AUSunivdata = alluniversitiesdata.filter(
+  const AUSunivdata = alluniversitiesdata?.filter(
     (el) => el.Country === "AUSTRALIA"
   );
  
@@ -118,7 +118,7 @@ function Universities() {
                 <input className="search_pd" placeholder="college"></input>
               </div>
               <div className="univfirstcon">
-                {showuniversitiesdata.map((r, i) => {
+                {showuniversitiesdata?.map((r, i) => {
                   return (
                     <>
                       <div className="univcon_first" key={i}>
