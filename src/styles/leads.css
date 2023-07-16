@@ -1,182 +1,467 @@
 .personalinf_div {
-    border: 1px solid rgba(198, 54, 56, 0.8);
-    padding: 3%;
-    box-sizing: border-box  ;
-    width: 95%;
-    border-radius: 25px;
-    margin: 0 auto;
+  border: 1px solid rgba(198, 54, 56, 0.8);
+  padding: 3%;
+  box-sizing: border-box;
+  width: 95%;
+  border-radius: 25px;
+  margin: 0 auto;
 }
 .per_inf_head {
-    font-family: 'Montserrat';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 1.25em ;
-        line-height: 24px;
-        color: #F2F3F2;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.25em;
+  line-height: 24px;
+  color: #f2f3f2;
 }
-.dls_flx{
-    display: flex;
-    align-items: center;
+.dls_flx {
+  display: flex;
+  align-items: center;
 }
-.per_inf_first_tbl , .per_inf_second_tbl , .per_inf_third_tbl  {
-    width: 33%;
+.per_inf_first_tbl,
+.per_inf_second_tbl,
+.per_inf_third_tbl {
+  width: 33%;
 }
-.per_inf_inptext{
-    font-family: 'Montserrat';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 1em;
-        line-height: 20px;
-        color: #F2F3F2;
+.per_inf_inptext {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1em;
+  line-height: 20px;
+  color: #f2f3f2;
+  width: 14em;
 }
 .per_inf_input {
-    background: #292929;
-        border: 1px solid rgba(198, 54, 56, 0.8);
-        box-shadow: -5px 5px 10px rgba(28, 28, 28, 0.2), 5px -5px 10px rgba(28, 28, 28, 0.2), -5px -5px 10px rgba(54, 54, 54, 0.9), 5px 5px 13px rgba(28, 28, 28, 0.9), inset 1px 1px 2px rgba(54, 54, 54, 0.3), inset -1px -1px 2px rgba(28, 28, 28, 0.5);
-        border-radius: 8px;
-        font-family: 'Montserrat';
-            font-style: normal;
-            font-weight: 500;
-            font-size: 1em;
-            line-height: 20px;
-            color: #F2F3F2;
-                height: 2.5em;
+  background: #292929;
+  border: 1px solid rgba(198, 54, 56, 0.8);
+  box-shadow: -5px 5px 10px rgba(28, 28, 28, 0.2),
+    5px -5px 10px rgba(28, 28, 28, 0.2), -5px -5px 10px rgba(54, 54, 54, 0.9),
+    5px 5px 13px rgba(28, 28, 28, 0.9), inset 1px 1px 2px rgba(54, 54, 54, 0.3),
+    inset -1px -1px 2px rgba(28, 28, 28, 0.5);
+  border-radius: 8px;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1em;
+  line-height: 20px;
+  color: #f2f3f2;
+  height: 2.5em;
 }
-.dls_flex{
-    display: flex;
-  
+.dls_flex {
+  display: flex;
 }
 .ml_5 {
-    margin-left: 2em;
+  margin-left: 2em;
 }
 .mr_4 {
-    margin-right: 0.5em;
+  margin-right: 0.5em;
 }
-.fz_20{
-    font-size: 1.25em;
+.fz_20 {
+  font-size: 1.25em;
 }
-.adrdetails_first{
-    width: 70%;
+.adrdetails_first {
+  width: 70%;
 }
 .adrdetails_second {
-    width: 30%;
+  width: 30%;
 }
 .width_lg {
-    width: 85%;
+  width: 85%;
 }
 
 .ml_10 {
-    margin-left: 40%;
+  margin-left: 26.3%;
 }
 .select_tag_inp {
-    width: 280%;
+  width: 280%;
 }
 .select_tag_inp2 {
-    width: 160%;
+  width: 160%;
 }
 .per_last-div {
-    width: 34%;
+  width: 34%;
 }
 .per_last-div2 {
-    width: 66%;
+  width: 66%;
 }
-.per_last-div input{
-    width: 80%;
+.per_last-div input {
+  width: 80%;
 }
 .per_last-div2 input {
-    width: 50%;
+  width: 50%;
 }
 .leadsbar_desc {
-    display: flex;
-    justify-content: space-around;
-    font-family: 'Montserrat';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 1rem;
-        /* line-height: 20px; */
-        color: #FFFFFF;
-        
+  display: flex;
+  justify-content: space-around;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1rem;
+  /* line-height: 20px; */
+  color: #ffffff;
 }
 
 .leads_bar_div img {
-    width: 90%;
-    margin-left: 5%;
-    margin-top: 4em;
-    
-    
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 4em;
 }
-.leads_bar_div{
-margin-bottom: 4em;
+.leads_bar_div {
+  margin-bottom: 4em;
 }
-datalist option  {
-    width: 1000px;
-    background-color: red;
+datalist option {
+  width: 1000px;
+  background-color: red;
 }
 datalist {
-    position: absolute;
-    background-color: white;
-    border: 1px solid blue;
-    border-radius: 0 0 5px 5px;
-    border-top: none;
-    font-family: sans-serif;
-    width: 350px;
-    padding: 5px;
-    max-height: 10rem;
-    overflow-y: auto
+  position: absolute;
+  background-color: white;
+  border: 1px solid blue;
+  border-radius: 0 0 5px 5px;
+  border-top: none;
+  font-family: sans-serif;
+  width: 350px;
+  padding: 5px;
+  max-height: 10rem;
+  overflow-y: auto;
 }
 
 datalist option {
-    background-color: rgb(201, 20, 20) !important;
-    padding: 4px;
-    color: blue;
-    margin-bottom: 1px;
-    font-size: 18px;
-    cursor: pointer;
+  background-color: rgb(201, 20, 20) !important;
+  padding: 4px;
+  color: blue;
+  margin-bottom: 1px;
+  font-size: 18px;
+  cursor: pointer;
 }
 .leadsbarmaindiv {
-    width: 90%;
-    height: 42px;
-    margin: 2rem auto;
-    border: 2px solid rgba(198, 54, 56, 0.8);
-    display: flex;
-    border-radius: 100px;
-    justify-content: space-between;
-    position: relative;
-    border-left: none;
-    border-right: none;
-    margin-top: 6%;
+  width: 90%;
+  height: 42px;
+  margin: 2rem auto;
+  border: 2px solid rgba(198, 54, 56, 0.8);
+  display: flex;
+  border-radius: 100px;
+  justify-content: space-between;
+  position: relative;
+  border-left: none;
+  border-right: none;
+  margin-top: 6%;
 }
 .leadsbarmaindiv div {
-    width: 65px;
-    height: 65px;
-    border-radius: 50%;
-    border: 2px solid rgba(198, 54, 56, 0.8);
-    /* position: absolute; */
-    margin-top: -13px;
-    background-color: #292929;
-    border-left: 2px solid #292929;
-    border-right: 2px solid #292929;
-    /* border-right: none; */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  border: 2px solid rgba(198, 54, 56, 0.8);
+  /* position: absolute; */
+  margin-top: -13px;
+  background-color: #292929;
+  border-left: 2px solid #292929;
+  border-right: 2px solid #292929;
+  /* border-right: none; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-
-.leadsbarmaindiv div:first-child{
-    border-left: 2px solid rgba(198, 54, 56, 0.8);
+.leadsbarmaindiv div:first-child {
+  border-left: 2px solid rgba(198, 54, 56, 0.8);
 }
 
 .leadsbarmaindiv div:last-child {
-    border-right: 2px solid rgba(198, 54, 56, 0.8);
+  border-right: 2px solid rgba(198, 54, 56, 0.8);
 }
 
-
-.leadsbarmaindiv div img{
-    width: 60%;
-    height: 60%;
-    margin: 0;
+.leadsbarmaindiv div img {
+  width: 60%;
+  height: 60%;
+  margin: 0;
 }
 .personalinf_div input {
-    outline: none;
+  outline: none;
+}
+.leadspg_edudet {
+  margin-top: 4%;
+}
+.leadspg_edudet h2 {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.4em;
+  line-height: 20px;
+  color: #f2f3f2;
+}
+.leadspg_edudet thead {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.4em;
+  line-height: 20px;
+  color: #f2f3f2;
+}
+.tbl_edudet thead {
+  font-size: 1.2em;
+  font-weight: 400 !important;
+}
+.docs_viewicon {
+  cursor: pointer;
+}
+.course_interest {
+  margin-top: 3%;
+  display: flex;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.2em;
+  line-height: 20px;
+  color: #f2f3f2;
+  width: 100%;
+}
+.course_interest div:nth-child(1) {
+  width: 30%;
+}
+.course_interest div:nth-child(2) {
+  width: 70%;
+}
+.course_interest div:nth-child(2) input {
+  background: #292929;
+  border: 1px solid rgba(198, 54, 56, 0.8);
+  box-shadow: -5px 5px 10px rgba(28, 28, 28, 0.2),
+    5px -5px 10px rgba(28, 28, 28, 0.2), -5px -5px 10px rgba(54, 54, 54, 0.9),
+    5px 5px 13px rgba(28, 28, 28, 0.9), inset 1px 1px 2px rgba(54, 54, 54, 0.3),
+    inset -1px -1px 2px rgba(28, 28, 28, 0.5);
+  border-radius: 8px;
+  padding: 1%;
+  width: 90%;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.8em;
+  line-height: 20px;
+  color: #f2f3f2;
+}
+.course_interest div:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1em;
+}
+.intakecon {
+  width: 100%;
+  margin-top: 3%;
+  display: flex;
+  /* justify-content: space-between; */
+}
+.intakecon span {
+  width: 25%;
+}
+.levelcon {
+  width: 100%;
+  margin-top: 1%;
+  display: flex;
+  /* justify-content: space-between; */
+}
+.levelcon span {
+  width: 25%;
+}
+.intakecon span:nth-child(1),
+.levelcon span:nth-child(1) {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.4em;
+}
+.extracur_con {
+  margin-top: 2%;
+}
+.extracur_con span:nth-child(1) {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.4em;
+}
+.extracur_con span input:nth-child(1) {
+  width: 60%;
+  background: #292929;
+  border: 1px solid rgba(198, 54, 56, 0.8);
+  box-shadow: -5px 5px 10px rgba(28, 28, 28, 0.2),
+    5px -5px 10px rgba(28, 28, 28, 0.2), -5px -5px 10px rgba(54, 54, 54, 0.9),
+    5px 5px 13px rgba(28, 28, 28, 0.9), inset 1px 1px 2px rgba(54, 54, 54, 0.3),
+    inset -1px -1px 2px rgba(28, 28, 28, 0.5);
+  border-radius: 8px;
+  padding: 0.8%;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.8em;
+  color: #f2f3f2;
+}
+.eng_profcon {
+  display: flex;
+  width: 100%;
+}
+/* .eng_profcon div table:nth-child(1){
+  width: 50%;
+  border: 1px solid white;
+} */
+.eng_profcon div {
+  width: 50%;
+}
+.engprof_tbl {
+  width: 100%;
+  border: 1px solid rgba(198, 54, 56, 0.8);
+  border-radius: 10px;
+}
+.tbl_body_eng td {
+  margin-top: 1%;
+}
+.entrylevelcon {
+  width: 100%;
+}
+.tbl_examtaken {
+  width: 50%;
+  border: 1px solid rgba(198, 54, 56, 0.8);
+  border-radius: 10px;
+}
+.sponsorcon {
+  width: 100%;
+  display: flex;
+  
+}
+.sponsorcon div {
+  width: 50%;
+  /* height: 5em; */
+  border: 1px solid rgba(198, 54, 56, 0.8);
+  border-radius: 5px;
+  padding: 1%;
+}
+.headingh4 {
+      font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.2em;
+  color: #f2f3f2;
+}
+.sponsorconfirst p:nth-child(1){
+    text-align: center;
+    color: #f2f3f2;
+}
+.sponsorconfirst p:nth-child(2){
+   font-style: normal;
+  font-weight: 400;
+  font-size: 1em;
+  color: #f2f3f2;
+   display: flex;
+  justify-content: space-between;
+  width: 80%;
+}
+.sponsorconfirst p:nth-child(3){
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1em;
+  color: #f2f3f2;
+}
+.sponsorconsecond p:nth-child(1){
+    text-align: center;
+    color: #f2f3f2;
+    
+}
+.assert_spn {
+   border-bottom: 1px solid white;
+   width: 10em;
+   text-align: center;
+   font-style: normal;
+  font-weight: 400;
+  font-size: 1em;
+  color: #f2f3f2;
+}
+.sponsorconfirst ul li  ,  .sponsorconsecond ul li {
+    display: flex;
+    justify-content: space-between;
+    font-style: normal;
+  font-weight: 400;
+  font-size: 1em;
+  color: #f2f3f2;
+}
+.sponsorconsecond p:nth-child(2){
+   font-style: normal;
+  font-weight: 400;
+  font-size: 1.1em;
+  color: #f2f3f2;
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+
+
+}
+.knowuspara {
+    font-size: 1.3em;
+    width: 100%;
+}
+.aboutuscon {
+  display: flex;
+  flex-wrap: wrap;
+}
+.aboutuscon div{
+  width: 20%;
+}
+.otherschkbx {
+  border-bottom: 1px solid white;
+}
+.place_Con , .date_con {
+  margin-top: 2%;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.1em;
+  color: #f2f3f2;
+}
+.place_Con input {
+  margin-left: 4%;
+}
+.date_con input {
+  margin-left: 4.4%;
+}
+.signaturespn {
+  margin-left: 45%;
+}
+.ofcpurpose {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.4em;
+  color: #f2f3f2;
+  text-align: center;
+  margin-top: 1%;
+}
+.ofcusetbl {
+  width: 100%;
+  /* height: 10em; */
+   border: 1px solid rgba(198, 54, 56, 0.8);
+   border-radius: 10px;
+   
+}
+.ofcusetbl tr td:nth-child(1) {
+  width: 25%;
+  border-right: 1px solid rgba(198, 54, 56, 0.8);
+  border-bottom: 1px solid rgba(198, 54, 56, 0.8);
+  height: 1.8em;
+}
+.ofcusetbl tr td:nth-child(2) {
+  width: 75%;
+    border-bottom: 1px solid rgba(198, 54, 56, 0.8);
+
+  /* border-right: 1px solid rgba(198, 54, 56, 0.8); */
+}
+.ofcusetbl tbody tr td:nth-child(1) {
+  font-size: 1.2em;
+}
+.ofcusetbl tr td textarea{
+  width: 99%;
+  height: 100%;
+  background-color: #292929;
+  border: none;
+  margin-left: -0%;
+  outline: none;
+   font-style: normal;
+  font-weight: 500;
+  font-size: 1.2em;
+  color: #f2f3f2;
 }

@@ -15,9 +15,13 @@ import {
   UpdateStudent,
   DeleteStudent,
   ImgUploadedStd,
+  EmployeeData,
 } from "../apis/admin";
 import InputPlaceholder2 from "../components/inputplaceholder2";
 import { Navigate } from "react-router-dom";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { ExportToExcel } from "../helpers/ExportToExcel";
 
 function StudentManagement() {
   const [showaddstd2, setshowaddstd2] = useState(false);
@@ -25,12 +29,17 @@ function StudentManagement() {
   const [deletestdpopup, setdeletestdpopup] = useState(false);
   const [deletestddata, setdeletestddata] = useState();
   const [studentsmgData, setstudentsmgData] = useState([]);
+    const [employeemanagementdata, setemployeemanagementdata] = useState([]);
   const [editstddata, seteditstddata] = useState([]);
-  const [editstdimg , seteditstdimg] = useState("")
+  const [editstdimg, seteditstdimg] = useState("");
+  const [selectedDate, setselectedDate] = useState(new Date());
+   const [selectedDateedit, setselectedDateedit] = useState(new Date());
+  const [selectedDateeditDOJ, setselectedDateeditDOJ] = useState(null);
   const admintype = localStorage.getItem("Employee_Type");
 
   useEffect(() => {
     StudentData();
+    EmployeesData();
   }, []);
 
   const StudentData = async () => {
@@ -38,6 +47,17 @@ function StudentManagement() {
       var data = await Studentdata();
 
       setstudentsmgData(data);
+      
+      
+    } catch (error) {
+      console.log("error while fetching data");
+    }
+  };
+  const EmployeesData = async () => {
+    try {
+      var data = await EmployeeData();
+    
+      setemployeemanagementdata(data);
     } catch (error) {
       console.log("error while fetching data");
     }
@@ -45,16 +65,22 @@ function StudentManagement() {
   const createstd = async () => {
     try {
       let Student_Name = document.getElementById("Student_Name").value;
-      let DOE = document.getElementById("DOE").value;
+      let DOE = selectedDate;
       let Student_Id = document.getElementById("Student_Id").value;
       let Counselling_Country = document.getElementById(
         "Counselling_Country"
       ).value;
-      let Counsellor = document.getElementById("Counsellor").value;
+      let Emp_id = document.getElementById("Counsellor").value;
       let Status = document.getElementById("Status").value;
       let Courses = document.getElementById("Courses").value;
       let Image = document.getElementById("btn_choose_input").files[0];
+      let counsellordata = employeemanagementdata?.filter((r)=> r.Employee_Id === Emp_id )
+      let Counsellor = counsellordata[0].Employee_Name;
+       
       
+      if (!Image) {
+        return alert("please add image ");
+      }
       if (Image.size >= 2097152) {
         return alert("images should be less than 2mb");
       }
@@ -69,17 +95,8 @@ function StudentManagement() {
       StdData.append("Status", Status);
       StdData.append("Courses", Courses);
       StdData.append("Image", Image);
-
-      // let data = {
-      //   Students_Name: Student_Name,
-      //   DOE: DOE,
-      //   Student_Id: Student_Id,
-      //   Counselling_Country: Counselling_Country,
-      //   Counsellor: Counsellor,
-      //   Status: Status,
-      //   Courses: Courses,
-      //   image: image,
-      // };
+       StdData.append("Emp_Id", Emp_id);
+     
       var Createstudent = await CreateStudent(StdData);
       const dataresponse = Createstudent;
 
@@ -98,14 +115,21 @@ function StudentManagement() {
   const Editstd = async () => {
     try {
       let Student_Name = document.getElementById("edit_Student_Name").value;
-      let DOE = document.getElementById("edit_DOE").value;
+      let DOE = selectedDateedit;
       let Student_Id = document.getElementById("edit_Student_Id").value;
       let Counselling_Country = document.getElementById(
-        "edit_Counselling_Country"
+        "edit_counselling_country"
       ).value;
-      let Counsellor = document.getElementById("edit_Counsellor").value;
+      let Emp_id = document.getElementById("edit_Counsellor").value;
       let Status = document.getElementById("edit_Status").value;
       let Courses = document.getElementById("edit_Courses").value;
+      let DOJ = selectedDateeditDOJ;
+      let counsellordata = employeemanagementdata?.filter(
+        (r) => r.Employee_Id === Emp_id
+      );
+      let Counsellor = counsellordata[0].Employee_Name;
+      let Emp_Id = counsellordata[0].Employee_Id;
+     
 
       let data = {
         Students_Name: Student_Name,
@@ -115,8 +139,10 @@ function StudentManagement() {
         Counsellor: Counsellor,
         Status: Status,
         Courses: Courses,
+        DOJ: DOJ,
+        Emp_Id: Emp_Id,
       };
-
+     console.log(data);
       var Updatestudent = await UpdateStudent(data);
       const dataresponse = Updatestudent;
 
@@ -135,10 +161,14 @@ function StudentManagement() {
     setshowaddstd2(true);
   };
   const EditStudent = (r) => {
-    setshoweditstd(true);
     
+    setshoweditstd(true);
     seteditstddata(r);
+    console.log(r);
     seteditstdimg(r.Image)
+    setselectedDateedit(new Date(r.DOE));
+    setselectedDateeditDOJ(new Date(r.DOJ));
+    
   };
   const canceladdstd = () => {
     setshowaddstd2(false);
@@ -165,6 +195,7 @@ function StudentManagement() {
   if (!admintype) {
     return <Navigate to="/" />;
   }
+  
   const fileselected = async(r) => {
     let Student_Id = document.getElementById("edit_Student_Id").value;
     let Image = document.getElementById("btn_choose_inputedit").files[0];
@@ -207,7 +238,13 @@ function StudentManagement() {
                 </button>
               </span>
               <span className="button_addstd">
-                <button className="btn_add_std btn_text_export">Export</button>
+                {
+                  // <button className="btn_add_std btn_text_export" >Export</button>
+                }
+                <ExportToExcel
+                  apiData={studentsmgData}
+                  fileName="StudentsData"
+                ></ExportToExcel>
               </span>
               <select className="select_tag">
                 <option>January</option>
@@ -265,7 +302,7 @@ function StudentManagement() {
                           {r.Students_Name}
                         </td>
                         <td className="appcomp_th_countrys table_td">
-                          {r.DOE}
+                          {new Date(r.DOE).toISOString().split("T")[0]}
                         </td>
                         <td className="appcomp_th_courses table_td">
                           {r.Student_Id}
@@ -325,23 +362,70 @@ function StudentManagement() {
             placehld="Student Name"
             id="Student_Name"
           ></InputPlaceholder>
-          <InputPlaceholder placehld="DOE" id="DOE"></InputPlaceholder>
+          <p className="placeholdertitle ml_7per">DOE</p>
+          <DatePicker
+            className="datepickercls stdmgdatepicker"
+            selected={selectedDate}
+            onChange={(date) => setselectedDate(date)}
+            dateFormat="dd/MM/yyyy"
+            id="DOE"
+          ></DatePicker>
+
           <InputPlaceholder
             placehld="Student Id"
             id="Student_Id"
             placeholder="Numbers are only allowed"
           ></InputPlaceholder>
-          <InputPlaceholder
-            placehld="Counselling Country"
+         
+          <p className="placeholdertitle ml_7per">Counselling Country</p>
+          <select
+            className="placeholderinput attendance_selecttag"
             id="Counselling_Country"
-          ></InputPlaceholder>
-          <InputPlaceholder
-            placehld="Counsellor"
-            id="Counsellor"
-          ></InputPlaceholder>
-          {
-            // <InputPlaceholder placehld="Status" id="Status"></InputPlaceholder>
-          }
+           
+          >
+            <option value="USA">USA</option>
+            <option value="UK">UK</option>
+            <option value="Canada">Canada</option>
+            <option value="Australia">Australia</option>
+            <option value="Switzerland">Switzerland</option>
+            <option value="Malta">Malta</option>
+            <option value="Portugal">Portugal</option>
+            <option value="Spain">Spain</option>
+            <option value="Dubai">Dubai</option>
+            <option value="New zealand">New zealand</option>
+            <option value="Ireland">Ireland</option>
+            <option value="Bulgaria">Bulgaria</option>
+            <option value="Iceland">Iceland</option>
+            <option value="Netherlands">Netherlands</option>
+            <option value="Sweden">Sweden</option>
+            <option value="Germany">Germany</option>
+          </select>
+          <div className="inp_coun_stdmg">
+            <p className="placeholdertitle att_placehld">Counsellor</p>
+            <select
+              id="Counsellor"
+              className="placeholderinput attendance_selecttag"
+            >
+              {employeemanagementdata?.map((r, i) => {
+                return (
+                  <option
+                    className="opt_empdet_smg"
+                    value={r.Employee_Id}
+                    id="idstdmgempid"
+                  >
+                    {r.Employee_Name}
+                    <span
+                      id="spnidempidsmg"
+                      className="spnempidemg"
+                      style={{ marginLeft: "2em" }}
+                    >
+                      (Emp_id :{r.Employee_Id})
+                    </span>
+                  </option>
+                );
+              })}
+            </select>
+          </div>
           <p className="placeholdertitle att_placehld">Status</p>
           <select
             name="Statusss"
@@ -390,57 +474,95 @@ function StudentManagement() {
             />
           </div>
           <InputPlaceholder2
-            placehld="Student Name"
+            placehld="Student_Name"
             id="edit_Student_Name"
             callback={(event) =>
               seteditstddata({ Students_Name: event.target.value })
             }
             value={editstddata.Students_Name}
           ></InputPlaceholder2>
-          <InputPlaceholder2
-            placehld="DOE"
+          <p className="placeholdertitle ml_7per">DOE</p>
+          <DatePicker
+            className="datepickercls stdmgdatepicker"
+            selected={selectedDateedit}
+            onChange={(date) => setselectedDateedit(date)}
+            dateFormat="dd/MM/yyyy"
             id="edit_DOE"
-            callback={(event) => seteditstddata({ DOE: event.target.value })}
-            value={editstddata.DOE}
-          ></InputPlaceholder2>
+          ></DatePicker>
+          {
+            // <InputPlaceholder2
+            // placehld="DOE"
+            // id="edit_DOE"
+            // callback={(event) => seteditstddata({ DOE: event.target.value })}
+            // value={editstddata.DOE}
+            // ></InputPlaceholder2>
+          }
+
           <InputPlaceholder2
             placehld="Student Id ( ID not editable )"
             id="edit_Student_Id"
             placeholder="Numbers are only allowed"
-            // callback={(event) =>
-            //   seteditstddata({ Student_Id: event.target.value })
-            // }
+            
             value={editstddata.Student_Id}
           ></InputPlaceholder2>
-          <InputPlaceholder2
-            placehld="Counselling Country"
-            id="edit_Counselling_Country"
-            callback={(event) =>
-              seteditstddata({ Counselling_Country: event.target.value })
-            }
-            value={editstddata.Counselling_Country}
-          ></InputPlaceholder2>
-          <InputPlaceholder2
-            placehld="Counsellor"
-            id="edit_Counsellor"
-            callback={(event) =>
-              seteditstddata({ Counsellor: event.target.value })
-            }
-            value={editstddata.Counsellor}
-          ></InputPlaceholder2>
-          {
-            // <InputPlaceholder
-            //   placehld="Status"
-            //   id="edit_Status"
-            //   callback={(event) => seteditstddata({ Status: event.target.value })}
-            //   value={editstddata.Status}
-            // ></InputPlaceholder>
-          }
+
+          <p className="placeholdertitle ml_7per">Counselling Country</p>
+          <select
+            className="placeholderinput attendance_selecttag"
+            id="edit_counselling_country"
+            defaultValue={editstddata.Counselling_Country}
+          >
+            <option value="USA">USA</option>
+            <option value="UK">UK</option>
+            <option value="Canada">Canada</option>
+            <option value="Australia">Australia</option>
+            <option value="Switzerland">Switzerland</option>
+            <option value="Malta">Malta</option>
+            <option value="Portugal">Portugal</option>
+            <option value="Spain">Spain</option>
+            <option value="Dubai">Dubai</option>
+            <option value="New zealand">New zealand</option>
+            <option value="Ireland">Ireland</option>
+            <option value="Bulgaria">Bulgaria</option>
+            <option value="Iceland">Iceland</option>
+            <option value="Netherlands">Netherlands</option>
+            <option value="Sweden">Sweden</option>
+            <option value="Germany">Germany</option>
+          </select>
+          <div className="inp_coun_stdmg">
+            <p className="placeholdertitle att_placehld">Counsellor</p>
+            <select
+              defaultValue={editstddata.Emp_Id}
+              id="edit_Counsellor"
+              className="placeholderinput attendance_selecttag"
+            >
+              {employeemanagementdata?.map((r, i) => {
+                return (
+                  <option
+                    className="opt_empdet_smg"
+                    value={r.Employee_Id}
+                    id="idstdmgempid"
+                  >
+                    {r.Employee_Name}
+                    <span
+                      id="spnidempidsmg"
+                      className="spnempidemg"
+                      style={{ marginLeft: "2em" }}
+                    >
+                      (Emp_id :{r.Employee_Id})
+                    </span>
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+
           <p className="placeholdertitle att_placehld">Status</p>
           <select
             name="Status"
             id="edit_Status"
             className="placeholderinput attendance_selecttag"
+            defaultValue={editstddata.Status}
           >
             <option value="Education Details">Education Details</option>
             <option value="University Finalised">University Finalised</option>
@@ -458,6 +580,15 @@ function StudentManagement() {
             }
             value={editstddata.Courses}
           ></InputPlaceholder2>
+          <p className="placeholdertitle ml_7per">DOJ</p>
+          <DatePicker
+            className="datepickercls stdmgdatepicker"
+            selected={selectedDateeditDOJ}
+            onChange={(date) => setselectedDateeditDOJ(date)}
+            dateFormat="dd/MM/yyyy"
+            id="stdmgdoj"
+          ></DatePicker>
+
           <div style={{ display: "flex" }}>
             <div style={{ width: "30%", margin: "4% 2% 2% 7%" }}>
               <p className="emp_photo">Student Photo</p>

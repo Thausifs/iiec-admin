@@ -36,7 +36,7 @@
    flex-direction: column;
    row-gap: 1.4em;
    width: 80%;
-   color: red;
+   color: white;
   
     
 }
@@ -152,7 +152,7 @@ font-family: 'Montserrat';
 }
 
 .dashboard_conversion{
-    height:49.2em;
+    /* height:49.2em; */
     width: 95%;
     margin: 0 auto;
     display: flex;
@@ -163,7 +163,7 @@ font-family: 'Montserrat';
   
 }
 .conversion_chart1{
-   width: 72%;
+width: 100%;
     /* border: 1px solid rgba(198, 54, 56, 0.8); */
  
     
@@ -185,14 +185,14 @@ font-family: 'Montserrat';
 
 }
 .total_inquiries{
-    width: 45.8%;
+    width: 48%;
     height:22.9em;
     border: 1px solid rgba(198, 54, 56, 0.8);
     box-shadow: var(--box-shadow2);
     border-radius: 25px;
 }
 .total_conversion{
-    width: 51%;
+    width: 48%;
     height: 22.9em;
     border: 1px solid rgba(198, 54, 56, 0.8);
     border-radius: 25px;
@@ -435,8 +435,8 @@ font-family: 'Montserrat';
     font-weight: 400;
     font-size: 20px;
     line-height: 27px;
-    color: #FFFFFF;
-    opacity: 0.6;
+    color: #a0a0a0;
+    /* opacity: 0.6; */
 
 }
 .appcomp_tr_th{
@@ -531,6 +531,7 @@ font-family: 'Montserrat';
 
 .edit_img{
     width: 1.3em;
+    cursor: pointer;
 }
 .appcomp_table ::-webkit-scrollbar {
     width: 0.3em;
@@ -551,6 +552,9 @@ font-family: 'Montserrat';
         border-radius: 25px;
 
 
+}
+.clr_wht > path {   
+    stroke: #fff;
 }
 .fz_18{
     font-size: 18px;
@@ -586,9 +590,11 @@ font-family: 'Montserrat';
     height: 50%;
 }
 .total_conversion img {
-width: 50%;
-margin-left: 20%;
-height: 55%;
+width: 10em;
+margin-left: 30%;
+/* height: 55%; */
+margin-bottom: 4%;
+margin-top: 6%;
 }
 .barcharthead {
     font-family: 'Montserrat';
@@ -650,6 +656,7 @@ height: 55%;
 .useraddicon {
     margin-left: 0.6em;
     font-size: 1.4em;
+    cursor: pointer;
 }
 
 .stdenqirydatadiv {
@@ -694,4 +701,61 @@ display: flex;
     display: flex;
     align-items: center;
     /* gap: 3%; */
+}
+.topinctobtm {
+    top: 250%;
+}
+.popup_dlt2 {
+    position: absolute;
+    height: auto;
+    width: 30%;
+    min-width: 250px;
+    padding: 1% 3% 3% 3%;
+    background-color: #292929;
+    color: #F2F3F2;
+    /* top: 50%; */
+    left: 35%;
+    border: 1px solid rgba(198, 54, 56, 0.97);
+    z-index: 1;
+    border-radius: 1.2em;
+}
+.popup_dlt2 h4 {
+    margin: 0 auto;
+    text-align: center;
+}
+.popup_dlt2  p {
+ display: flex;
+ justify-content: space-around;
+ 
+}
+.timepickercls {
+    color: white;
+    background-color: white;
+    /* width: 50%; */
+
+}
+.datepickercls {
+    width: 60%;
+}
+.popup_dlt2 span {
+    /* float: right; */
+    /* margin-right: 2em; */
+    /* width: 50%; */
+}
+.sltcoun {
+    width: 10em;
+}
+.adminappcmp {
+    width: 100%;
+}
+.widthlgstdlt {
+    width: 100%;
+}
+.brd_2pxred {
+    border: 1px solid rgba(198, 54, 56, 0.97);
+    width: 100%;
+    border-radius: 20px;
+    max-height: 100% !important;
+   min-height: 22em;
+
 }

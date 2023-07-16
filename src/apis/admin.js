@@ -1,6 +1,5 @@
 import { Admins } from "../axios/index";
 
-
 export const EmployeeData = async () => {
   let Employeedata = await Admins.get(`/viewallemployees`)
     .then((res) => {
@@ -12,12 +11,21 @@ export const EmployeeData = async () => {
 
   return Employeedata;
 };
+export const GetEmployeeData = async (data) => {
+  let Employeedata = await Admins.post(`/getemployee`,data)
+    .then((res) => {
+      return res.data.Data;
+    })
+    .catch((err) => {
+      return err.response;
+    });
+
+  return Employeedata;
+};
 
 export const CreateEmployee = async (data) => {
-  
   const CreateEmployee = await Admins.post(`/createEmployee`, data)
     .then((res) => {
-     
       return res.data;
     })
     .catch((err) => {
@@ -59,7 +67,6 @@ export const CreateStudent = async (StdData) => {
 
   const CreateStudent = await Admins.post(`/createStudent`, StdData)
     .then((res) => {
-     
       return res.data;
     })
     .catch((err) => {
@@ -94,18 +101,16 @@ export const ViewallUniversities = async () => {
       // alert(err.message);
       return err.response;
     });
-  
+
   return ViewUniversity;
-}
-;
+};
 
 export const DeleteStudent = async (r) => {
-       var _ = console.log;
-          _('jijkj')
+  var _ = console.log;
+  _("jijkj");
   const Student = await Admins.post("/deletestudent", r)
-    
-    .then((res) => {
 
+    .then((res) => {
       return res.data.message;
     })
     .catch((err) => {
@@ -116,9 +121,7 @@ export const DeleteStudent = async (r) => {
   return Student;
 };
 
-
 export const DeleteEmployee = async (r) => {
-  
   const Employee = await Admins.post("/deleteemployee", r)
 
     .then((res) => {
@@ -160,7 +163,6 @@ export const AplCompleted = async () => {
 export const ImgUploadedStd = async (StdData) => {
   const ImgUploaded = await Admins.post("/addimagestd", StdData)
     .then((res) => {
-    
       return res.data;
     })
     .catch((err) => {
@@ -177,4 +179,17 @@ export const ImgUploadedEmp = async (EmpData) => {
       return err.response;
     });
   return ImgUploaded;
+};
+export const AddCounselling = async (data) => {
+  const Addcounselling = await Admins.post(`/addcounselling`, data)
+    .then((res) => {
+      // console.log(res.data.message);
+      return res;
+    })
+    .catch((err) => {
+      // alert(err.message);
+      return err.response;
+    });
+
+  return Addcounselling;
 };

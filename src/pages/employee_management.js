@@ -18,7 +18,11 @@ import {
   ImgUploadedEmp,
 } from "../apis/admin";
 import delete_icon from "../asserts/images/delete_icon.png";
-import { Navigate } from "react-router-dom";
+// import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { ExportToExcel } from "../helpers/ExportToExcel";
 
 function EmployeeManagement() {
   const [showcreateemp, setshowcreateemp] = useState(false);
@@ -26,8 +30,12 @@ function EmployeeManagement() {
   const [deleteemppopup, setdeleteemppopup] = useState(false);
   const [deleteempdata, setdeleteempdata] = useState();
   const [employeemanagementdata, setemployeemanagementdata] = useState([]);
+  const [Excelempdata, setExcelempdata] = useState([]);
   const [editempdata, seteditempdata] = useState([]);
   const [editempimg, seteditempimg] = useState("");
+  const [selectedDate, setselectedDate] = useState(new Date());
+  const [selectedDateedit, setselectedDateedit] = useState(null);
+     const navigate = useNavigate();
   const admintype = localStorage.getItem("Employee_Type");
 
   useEffect(() => {
@@ -35,23 +43,29 @@ function EmployeeManagement() {
   }, []);
 
   useEffect(() => {
+      const admintype = localStorage.getItem("Employee_Type");
     if (admintype === "superadmin") {
       document.getElementById("empbtn_addemp").style.display = "block";
     } else if (admintype === "admin" || admintype === null) {
       document.getElementById("empbtn_addemp").style.display = "none";
+    }else if ( admintype === null) {
+      navigate("/login")
     }
-  }, [admintype]);
-
+  }, [admintype, navigate]);
+//  if (!admintype) {
+//     navigate("/dashboard")
+//   }
   const createemp = async () => {
     try {
       let Employee_name = document.getElementById("employee_name").value;
-      let Doj = document.getElementById("doj").value;
+      let Employee_Email = document.getElementById("employee_email").value;
+      let Doj = selectedDate;
       let Employee_id = document.getElementById("employee_id").value;
       let Counselling_Country = document.getElementById(
         "counselling_country"
       ).value;
-      let address = document.getElementById("address").value;
-      let password = document.getElementById("password").value;
+      let Location = document.getElementById("location").value;
+      // let password = document.getElementById("password").value;
       let image = document.getElementById("btn_choose_inputemp").files[0];
 
       if (image.size >= 2097152) {
@@ -62,11 +76,12 @@ function EmployeeManagement() {
       // }
       const StdData = new FormData();
       StdData.append("Employee_Name", Employee_name);
+      StdData.append("Employee_Email", Employee_Email);
       StdData.append("DOJ", Doj);
       StdData.append("Employee_Id", Employee_id);
       StdData.append("Counselling_Country", Counselling_Country);
-      StdData.append("Address", address);
-      StdData.append("Password", password);
+      StdData.append("Location", Location);
+      // StdData.append("Password", password);
       StdData.append("Image", image);
 
       // let data = {
@@ -77,7 +92,7 @@ function EmployeeManagement() {
       //   Address: address,
       //   Password: password,
       // };
-
+      console.log(StdData);
       var CreateEmployEe = await CreateEmployee(StdData);
       const dataresponse = CreateEmployEe;
       if (!dataresponse.status) {
@@ -96,23 +111,25 @@ function EmployeeManagement() {
   const Edit_Employee = async () => {
     try {
       let Employee_name = document.getElementById("edit_employee_name").value;
-      let Doj = document.getElementById("edit_doj").value;
+      let Employee_Email = document.getElementById("edit_employee_email").value;
+      let Doj = selectedDateedit;
       let Employee_id = document.getElementById("edit_employee_id").value;
       let Counselling_Country = document.getElementById(
         "edit_counselling_country"
       ).value;
-      let address = document.getElementById("edit_address").value;
-      let password = document.getElementById("edit_password").value;
+      let Location = document.getElementById("edit_location").value;
 
+     
       let data = {
         Employee_Name: Employee_name,
+        Employee_Email: Employee_Email,
         DOJ: Doj,
         Employee_Id: Employee_id,
-        counselling_Country: Counselling_Country,
-        Address: address,
-        Password: password,
+        Counselling_Country: Counselling_Country,
+        Location: Location,
+        // Password: password,
       };
-      console.log(data);
+
       var EditEmployEe = await EditEmployee(data);
       const dataresponse = EditEmployEe;
 
@@ -131,8 +148,12 @@ function EmployeeManagement() {
   const EmployeesData = async () => {
     try {
       var data = await EmployeeData();
-
       setemployeemanagementdata(data);
+      
+      const newArr = data.map(({ Password, ...rest }) => {
+        return rest;
+      });
+      setExcelempdata(newArr);
     } catch (error) {
       console.log("error while fetching data");
     }
@@ -144,7 +165,9 @@ function EmployeeManagement() {
   const EditEmp = (r) => {
     setshoweditemp(true);
     seteditempdata(r);
+      console.log(r);
     seteditempimg(r.Image);
+    setselectedDateedit(new Date(r.DOJ));
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -174,9 +197,7 @@ function EmployeeManagement() {
   const virtualcard = () => {
     alert("Virtual card not set ");
   };
-  if (!admintype) {
-    return <Navigate to="/" />;
-  }
+ 
   const fileselected = async (r) => {
     let Employee_Id = document.getElementById("edit_employee_id").value;
     let Image = document.getElementById("btn_choose_inputempedit").files[0];
@@ -221,7 +242,13 @@ function EmployeeManagement() {
                 </button>
               </span>
               <span className="button_addstd">
-                <button className="btn_add_std btn_text_export">Export</button>
+                {
+                  // <button className="btn_add_std btn_text_export">Export</button>
+                }
+                <ExportToExcel
+                  apiData={Excelempdata}
+                  fileName="EmployeesData"
+                ></ExportToExcel>
               </span>
               <select className="select_tag">
                 <option>January</option>
@@ -246,10 +273,10 @@ function EmployeeManagement() {
             <div className="tbl_emp_management">
               <table className="emp_mg">
                 <thead>
-                  <th className="std_name_couns" width="15%">
+                  <th className="std_name_couns" width="10%">
                     Employee Name{" "}
                   </th>
-                  <th className="counselor_couns" width="6%">
+                  <th className="counselor_couns" width="12%">
                     DOJ
                   </th>
                   <th className="course_couns" width="10%">
@@ -259,7 +286,7 @@ function EmployeeManagement() {
                     counselling Country
                   </th>
                   <th className="action_couns" width="15%">
-                    Address
+                    Location
                   </th>
 
                   <th className="action_couns" width="10%">
@@ -277,7 +304,7 @@ function EmployeeManagement() {
                           {r.Employee_Name}
                         </td>
                         <td className="appcomp_th_countrys table_td">
-                          {r.DOJ}
+                          {new Date(r.DOJ).toISOString().split("T")[0]}
                         </td>
                         <td className="appcomp_th_courses table_td">
                           {r.Employee_Id}
@@ -285,7 +312,7 @@ function EmployeeManagement() {
                         <td className="appcomp_th_dojs table_td">
                           {r.Counselling_Country}
                         </td>
-                        <td className="table_td">{r.Address}</td>
+                        <td className="table_td">{r.Location}</td>
 
                         <td>
                           <img
@@ -335,21 +362,67 @@ function EmployeeManagement() {
             placehld="Employee_Name"
             id="employee_name"
           ></InputPlaceholder>
-          <InputPlaceholder placehld="DOJ" id="doj"></InputPlaceholder>
+          <p className="placeholdertitle emailplcdml">Employee_Email</p>
+          <input
+            type="email"
+            placeholder=""
+            id="employee_email"
+            // value={value}
+            // onChange={(e) => callback(e)}
+            className="placeholderinput emailinpempmg"
+          ></input>
+
+          <p className="placeholdertitle ml_7per">DOJ</p>
+          <DatePicker
+            className="datepickercls stdmgdatepicker"
+            selected={selectedDate}
+            onChange={(date) => setselectedDate(date)}
+            dateFormat="dd/MM/yyyy"
+            id="DOE"
+          ></DatePicker>
           <InputPlaceholder
             placehld="Employee_Id"
             id="employee_id"
             placeholder="Numbers are only allowed"
           ></InputPlaceholder>
-          <InputPlaceholder
-            placehld="counselling_Country"
+          <p className="placeholdertitle ml_7per">Counselling Country</p>
+          <select
+            className="placeholderinput attendance_selecttag"
             id="counselling_country"
-          ></InputPlaceholder>
-          <InputPlaceholder placehld="Address" id="address"></InputPlaceholder>
-          <InputPlaceholder
-            placehld="Password"
-            id="password"
-          ></InputPlaceholder>
+          >
+            <option>USA</option>
+            <option>UK</option>
+            <option>Canada</option>
+            <option>Australia</option>
+            <option>Switzerland</option>
+            <option>Malta</option>
+            <option>Portugal</option>
+            <option>Spain</option>
+            <option>Dubai</option>
+            <option>New zealand</option>
+            <option>Ireland</option>
+            <option>Bulgaria</option>
+            <option>Iceland</option>
+            <option>Netherlands</option>
+            <option>Sweden</option>
+            <option>Germany</option>
+          </select>
+          <p className="placeholdertitle ml_7per">Branch</p>
+          <select
+            className="placeholderinput attendance_selecttag"
+            id="location"
+          >
+            <option>Chennai</option>
+            <option>Dubai</option>
+            <option>Australia</option>
+          </select>
+
+          {
+            // <InputPlaceholder
+            //   placehld="Password"
+            //   id="password"
+            // ></InputPlaceholder>
+          }
           {
             // <p className="placeholdertitle att_placehld">Password</p>
             // <select
@@ -388,27 +461,40 @@ function EmployeeManagement() {
         <div className="createstd_maincon">
           <div className="head_crt_emp">
             {" "}
-            <span className="crt_std">Edit Employee</span>
+            <span className="crt_std">Edit Employee<span className='editidspn'>ID:<span>{editempdata.Employee_Id }</span></span></span>
             <MdCancel
               style={{ color: "EA1E21", fontSize: "1.6em" }}
               onClick={() => canceleditemp()}
             />
           </div>
           <InputPlaceholder2
-            placehld="Employee_Name"
+            placehld="Employee Name"
             id="edit_employee_name"
             callback={(event) =>
               seteditempdata({ Employee_Name: event.target.value })
             }
             value={editempdata.Employee_Name}
           ></InputPlaceholder2>
-          <InputPlaceholder2
-            placehld="DOJ"
-            id="edit_doj"
-            callback={(event) => seteditempdata({ DOJ: event.target.value })}
-            value={editempdata.DOJ}
-          ></InputPlaceholder2>
-          <InputPlaceholder2
+          <p className="placeholdertitle emailplcdml">Employee Email</p>
+          <input
+            type="email"
+            placeholder=""
+            id="edit_employee_email"
+            callback={(event) =>
+              seteditempdata({ Employee_Email: event.target.value })
+            }
+            value={editempdata.Employee_Email}
+            className="placeholderinput emailinpempmg"
+          ></input>
+          <p className="placeholdertitle ml_7per">DOJ</p>
+          <DatePicker
+            className="datepickercls stdmgdatepicker"
+            selected={selectedDateedit}
+            onChange={(date) => setselectedDateedit(date)}
+            dateFormat="dd/MM/yyyy"
+            id="EDIT_DOE"
+          ></DatePicker>
+          {/* <InputPlaceholder2
             placehld="Employee_Id ( Id not editable )"
             id="edit_employee_id"
             placeholder="Id not editable"
@@ -416,31 +502,41 @@ function EmployeeManagement() {
             //   //  seteditempdata({ Employee_Id: event.target.value })
             // }
             value={editempdata.Employee_Id}
-          ></InputPlaceholder2>
-          <InputPlaceholder2
-            placehld="counselling_Country"
+          ></InputPlaceholder2> */}
+          <p className="placeholdertitle ml_7per">Counselling Country</p>
+          <select
+            className="placeholderinput attendance_selecttag"
             id="edit_counselling_country"
-            callback={(event) =>
-              seteditempdata({ counselling_Country: event.target.value })
-            }
-            value={editempdata.Counselling_Country}
-          ></InputPlaceholder2>
-          <InputPlaceholder2
-            placehld="Address"
-            id="edit_address"
-            callback={(event) =>
-              seteditempdata({ Address: event.target.value })
-            }
-            value={editempdata.Address}
-          ></InputPlaceholder2>
-          <InputPlaceholder2
-            placehld="Password"
-            id="edit_password"
-            callback={(event) =>
-              seteditempdata({ Password: event.target.value })
-            }
-            value={editempdata.Password}
-          ></InputPlaceholder2>
+            defaultValue={editempdata.Counselling_Country}
+          >
+            <option>USA</option>
+            <option>UK</option>
+            <option>Canada</option>
+            <option>Australia</option>
+            <option>Switzerland</option>
+            <option>Malta</option>
+            <option>Portugal</option>
+            <option>Spain</option>
+            <option>Dubai</option>
+            <option>New zealand</option>
+            <option>Ireland</option>
+            <option>Bulgaria</option>
+            <option>Iceland</option>
+            <option>Netherlands</option>
+            <option>Sweden</option>
+            <option>Germany</option>
+          </select>
+          <p className="placeholdertitle ml_7per">Branch</p>
+          <select
+            className="placeholderinput attendance_selecttag"
+            id="edit_location"
+            defaultValue={editempdata.Location}
+          >
+            <option value="Chennai">Chennai</option>
+            <option value="Dubai">Dubai</option>
+            <option value="Australia">Australia</option>
+          </select>
+
           {
             // <InputPlaceholder
             //   placehld="Attendance"

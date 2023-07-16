@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Header from "../components/header";
 import Sidebar from "../components/sidebar";
 import "../styles/counselling_schedule.css";
@@ -9,9 +9,15 @@ import disable_icon from "../asserts/images/disable_icon.png";
 import { Navigate } from "react-router-dom";
 import msg_icon from "../asserts/images/msg_icon.png";
 import { applicationdata } from "../data";
+import { AllRegUsers } from "../apis/admin";
+import { sockets } from "../apis/socket";
 
 function CounsellingSchedule() {
-   const admintype = localStorage.getItem("Employee_Type");
+  const renderAfterCalled = useRef(false);
+  const admintype = localStorage.getItem("Employee_Type");
+  const [counsheduleddata, setcounsheduleddata] = useState([]);
+  const [counpaypendata, setcounpaypendata] = useState([]);
+
   // const [showaddstd, setshowaddstd] = useState(false);
   // const canceladdstd = () => {
   //   setshowaddstd(false);
@@ -19,10 +25,38 @@ function CounsellingSchedule() {
   // const AddStudent = () => {
   //   setshowaddstd(true);
   // };
-   if (!admintype) {
-     return <Navigate to="/" />;
-   }
 
+  const AllRegUser = async () => {
+    try {
+      var data = await AllRegUsers();
+      var paypendingdata = await data.filter(
+        (r) => r.Status === "Counselling Payment Pending"
+      );
+      var paycomdata = data.filter((r) => r.Status === "Payment Completed");
+      setcounpaypendata(paypendingdata);
+      setcounsheduleddata(paycomdata);
+      // setcounpaypendata(paypendingdata);
+      // console.log(counpaypendata);
+    } catch (error) {
+      alert("Error occured during data fetching");
+    }
+  };
+
+  useEffect(() => {
+    if (!renderAfterCalled.current) {
+      AllRegUser();
+      sockets.off("studentstatus").on("studentstatus", async (data) => {
+        if (data === "reload") {
+          await AllRegUser();
+        }
+      });
+    }
+    renderAfterCalled.current = true;
+  }, []);
+
+  if (!admintype) {
+    return <Navigate to="/" />;
+  }
   return (
     <div className="dashboardpg">
       <Header />
@@ -42,7 +76,9 @@ function CounsellingSchedule() {
             </div>
             <div className="countries_table">
               <div className="coun_tbl_heading">
-                <span className="counselling_heading ">Finland</span>
+                <span className="counselling_heading ">
+                  Scheduled Counselling
+                </span>
                 <span className="button_addstd">
                   <button className="btn_add_std">add Student</button>
                 </span>
@@ -50,37 +86,51 @@ function CounsellingSchedule() {
               <div className="table_div">
                 <table className="tbl_countries">
                   <thead className="tr_head_coun">
-                    <th className="std_name_couns" width="20%">
+                    <th className="std_name_couns" width="10%">
                       Student Name
                     </th>
-                    <th className="counselor_couns" width="20%">
-                      Counselor
+                    <th className="counselor_couns" width="10%">
+                      Country
                     </th>
-                    <th className="course_couns" width="20%">
+                    <th className="course_couns" width="15%">
                       Course
                     </th>
-                    <th className="doe_couns" width="20%">
-                      DOE
+                    <th className="doe_couns" width="15%">
+                      Counsellor
                     </th>
-                    <th className="action_couns" width="20%">
+                    <th className="action_couns" width="10%">
+                      Date
+                    </th>
+                    <th className="action_couns" width="10%">
+                      Time
+                    </th>
+                    <th className="action_couns" width="30%">
                       Action
                     </th>
                   </thead>
 
                   <tbody className="appcomp_tbody">
-                    {applicationdata?.map((r, i) => {
+                    {counsheduleddata?.map((r, i) => {
                       return (
                         <tr key={i} className="tr_app_comp">
                           <td className="appcomp_th_names table_td" width="20%">
-                            {r.name}
+                            {r.First_Name}
                           </td>
                           <td className="appcomp_th_countrys table_td">
-                            {r.country}
+                            {r.Coun_Country}
                           </td>
                           <td className="appcomp_th_courses table_td">
-                            {r.course}
+                            {r.Study_level}
                           </td>
-                          <td className="appcomp_th_dojs table_td">{r.doj}</td>
+                          <td className="appcomp_th_dojs table_td">
+                            {r.Counsellor}
+                          </td>
+                          <td className="appcomp_th_dojs table_td">
+                            {r.Coun_Date}
+                          </td>
+                          <td className="appcomp_th_dojs table_td">
+                            {r.Coun_Time}
+                          </td>
                           <td>
                             <span>
                               <img
@@ -123,7 +173,9 @@ function CounsellingSchedule() {
 
             <div className="countries_table mgtp_4">
               <div className="coun_tbl_heading">
-                <span className="counselling_heading ">Denmark</span>
+                <span className="counselling_heading ">
+                  Counseling Payment pending
+                </span>
                 <span className="button_addstd">
                   <button className="btn_add_std">add Student</button>
                 </span>
@@ -131,69 +183,55 @@ function CounsellingSchedule() {
               <div className="table_div">
                 <table className="tbl_countries">
                   <thead className="tr_head_coun">
-                    <th className="std_name_couns" width="20%">
+                    <th className="std_name_couns" width="10%">
                       Student Name
                     </th>
-                    <th className="counselor_couns" width="20%">
-                      Counselor
+                    <th className="counselor_couns" width="10%">
+                      Country
                     </th>
-                    <th className="course_couns" width="20%">
+                    <th className="course_couns" width="15%">
                       Course
                     </th>
-                    <th className="doe_couns" width="20%">
-                      DOE
+                    <th className="doe_couns" width="15%">
+                      Counsellor
                     </th>
-                    <th className="action_couns" width="20%">
-                      Action
+                    <th className="action_couns" width="10%">
+                      Date
+                    </th>
+                    <th className="action_couns" width="10%">
+                      Time
+                    </th>
+                    <th className="action_couns" width="30%">
+                      Payment Status
                     </th>
                   </thead>
 
                   <tbody className="appcomp_tbody">
-                    {applicationdata?.map((r, i) => {
+                    {counpaypendata?.map((r, i) => {
                       return (
                         <tr key={i} className="tr_app_comp">
                           <td className="appcomp_th_names table_td" width="20%">
-                            {r.name}
+                            {r.First_Name}
                           </td>
                           <td className="appcomp_th_countrys table_td">
-                            {r.country}
+                            {r.Coun_Country}
                           </td>
                           <td className="appcomp_th_courses table_td">
-                            {r.course}
+                            {r.Study_level}
                           </td>
-                          <td className="appcomp_th_dojs table_td">{r.doj}</td>
-                          <td>
-                            <span>
-                              <img
-                                className="edit_icn_spn"
-                                src={edit_icon}
-                                alt=""
-                              ></img>
-                            </span>
-                            <span>
-                              <img
-                                className="edit_icn_spn"
-                                src={delete_icon}
-                                alt=""
-                              ></img>
-                            </span>
-                            <span>
-                              {" "}
-                              <img
-                                className="edit_icn_spn"
-                                src={disable_icon}
-                                alt=""
-                              ></img>
-                            </span>
-                            <span>
-                              {" "}
-                              <img
-                                className="edit_icn_spn"
-                                src={msg_icon}
-                                alt=""
-                              ></img>
-                            </span>
+                          <td className="appcomp_th_dojs table_td">
+                            {r.Counsellor}
                           </td>
+                          <td className="appcomp_th_dojs table_td">
+                            {r.Coun_Date}
+                          </td>
+                          <td className="appcomp_th_dojs table_td">
+                            {r.Coun_Time}
+                          </td>
+                          <td className="appcomp_th_dojs table_td">
+                            {r.Status}
+                          </td>
+                          <td className="appcomp_th_dojs table_td"></td>
                         </tr>
                       );
                     })}
@@ -202,7 +240,7 @@ function CounsellingSchedule() {
               </div>
             </div>
 
-            <div className="countries_table mgtp_4">
+            {/* <div className="countries_table mgtp_4">
               <div className="coun_tbl_heading">
                 <span className="counselling_heading ">Germany</span>
                 <span className="button_addstd">
@@ -281,7 +319,7 @@ function CounsellingSchedule() {
                   </tbody>
                 </table>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

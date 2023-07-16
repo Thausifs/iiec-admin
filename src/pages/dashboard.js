@@ -11,7 +11,7 @@ import list from "../asserts/images/list.png";
 // import bar_1 from "../asserts/images/bar_1.png";
 import bar_2 from "../asserts/images/bar_2.png";
 // import leads_bar from "../asserts/images/leads_bar.png";
-import { applicationdata } from "../data";
+// import { applicationdata } from "../data";
 import { studentinterestdata } from "../data";
 import tick from "../asserts/images/approved.png";
 import Pending from "../asserts/images/pending.png";
@@ -20,26 +20,47 @@ import leads_icon from "../asserts/images/leads_icon.png";
 // import table_1 from "../asserts/images/table_1.png";
 import Charts from "../components/charts/charts";
 import Barcharts from "../components/charts/barchart";
-import Barcharts2 from "../components/charts/barchart2";
+// import Barcharts2 from "../components/charts/barchart2";
 import { AllRegUsers, Studentdata } from "../apis/admin";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { FaMinus } from "react-icons/fa";
 import InputPlaceholder from "../components/inputplaceholder";
 import { MdCancel } from "react-icons/md";
-
-import { CreateStudent, AplCompleted } from "../apis/admin";
-import { Navigate } from "react-router-dom";
+import moment from "moment";
+import { GrSchedule } from "react-icons/gr";
+import {
+  CreateStudent,
+  AplCompleted,
+  AddCounselling,
+  EmployeeData,
+} from "../apis/admin";
+// import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import TimePicker from "react-time-picker";
+// import edit_icon from "../asserts/images/edit_icon.png";
+// import delete_icon from "../asserts/images/delete_icon.png";
+// import disable_icon from "../asserts/images/disable_icon.png";
 
 function Dashboard() {
   const admintype = localStorage.getItem("Employee_Type");
+  const adminid = localStorage.getItem("Employee_Id");
+ 
   const [AllUsersData, setAllUsersData] = useState([]);
   const [showaddstd2, setshowaddstd2] = useState(false);
   const [showviewstd, setshowviewstd] = useState(false);
+  const [stdaddcoun, setstdaddcoun] = useState(false);
   const [showstddata, setshowstddata] = useState({});
   const [applcompleteddata, setapplcompleteddata] = useState([]);
   const [studentsmgData, setstudentsmgData] = useState([]);
   const [filtereddata, setfiltereddata] = useState([]);
   const [selectedstd, setselectedstd] = useState([]);
+  const [employeemanagementdata, setemployeemanagementdata] = useState([]);
+  const [stdcoundata, setstdcoundata] = useState({});
+  const navigate = useNavigate();
+  const [startDate, setStartDate] = useState(new Date());
+  const [timevalue, onChange] = useState("10:00");
   const initialimg = {
     imgone: false,
     imgtwo: false,
@@ -48,11 +69,14 @@ function Dashboard() {
     imgfive: false,
   };
   const [imgarr, setimgarr] = useState({ initialimg });
+  const [employeedet, setemployeedet] = useState();
   const AllRegUserfn = async () => {
     try {
       var data = await AllRegUsers();
-
-      setAllUsersData(data);
+      var Data = await data.filter((r) => r.Status === "In-process");
+      
+      setAllUsersData(Data);
+     
     } catch (error) {
       console.log("error while fetching data");
     }
@@ -61,29 +85,42 @@ function Dashboard() {
     try {
       var data = await AplCompleted();
       setapplcompleteddata(data);
+
+      if (admintype === "admin") {
+        const Data = data?.filter((r) => r.Emp_Id === adminid);
+        setapplcompleteddata(Data);
+      }
     } catch (error) {
       console.log("error while fetching data");
     }
   };
+
   const StudentData = async () => {
     try {
       var data = await Studentdata();
-
+      // console.log(data);
       setstudentsmgData(data);
+      if (admintype === "admin") {
+        const Data = data?.filter((r) => r.Emp_Id === adminid);
+        setstudentsmgData(Data);
+      }
     } catch (error) {
       console.log("error while fetching data");
     }
   };
 
   useEffect(() => {
+    
     AllRegUserfn();
     APPCOmplete();
     StudentData();
+    EmployeesData();
   }, []);
 
-  if (!admintype) {
-    return <Navigate to="/" />;
-  }
+  // if (!adminid) {
+  //   console.log(adminid);
+  //   navigate("/")
+  // }
 
   const handleSearchchange = (e) => {
     const filteredArray = studentsmgData.filter((r) =>
@@ -168,6 +205,13 @@ function Dashboard() {
 
     // document.getElementById("crtstd_dashboard").style.top = "30";
   };
+  const AddStdcoun = (r) => {
+    // console.log(r);
+    setstdcoundata(r);
+    document.getElementById("dashboard_Con").style.filter = "blur(3px)";
+    setstdaddcoun(true);
+    
+  };
   const createstd = async () => {
     try {
       let Student_Name = document.getElementById("Student_Name").value;
@@ -202,6 +246,59 @@ function Dashboard() {
       alert("Error while creating Student");
     }
   };
+  const Setcounstd = async () => {
+    document.getElementById("counscheduledashid").style.top= "350%"
+    try {
+      let Coun_Country = document.getElementById("counstdcountry").value;
+      let Coun_Date = document.getElementById("counstddate").value;
+      let Coun_Time = timevalue;
+      let Counsellor = document.getElementById("counstddatecounsellor").value;
+      let Email_id = stdcoundata.Email_id;
+      let data = {
+        Coun_Country: Coun_Country,
+        Coun_Date: Coun_Date,
+        Coun_Time: Coun_Time,
+        Counsellor: Counsellor,
+        Email_id: Email_id,
+      };
+
+      // console.log(data);
+      var AddCounSelling = await AddCounselling(data);
+      // console.log(AddCounSelling);
+      if (AddCounSelling.status === 200) {
+        alert(AddCounSelling.data.message);
+        document.getElementById("dashboard_Con").style.filter = "none";
+        setstdaddcoun(false);
+         AllRegUserfn();
+        
+      } else if (AddCounSelling.status === 400) {
+        alert(AddCounSelling.data.message);
+      } else if (AddCounSelling.status === 404) {
+        alert(AddCounSelling.data.message);
+      }
+    } catch (error) {
+      alert("Error while Scheduling the Counselling");
+    }
+  };
+  const Cancelcounstd = async () => {
+    document.getElementById("dashboard_Con").style.filter = "none";
+    setstdaddcoun(false);
+  };
+  const EmployeesData = async () => {
+    try {
+      var data = await EmployeeData();
+
+      setemployeemanagementdata(data);
+      const Data = data.filter((r) => r.Employee_Id === adminid);
+      setemployeedet(Data[0]);
+      
+    } catch (error) {
+      console.log("error while fetching data");
+    }
+  };
+  // if (admintype === "admin") {
+     
+  // }
 
   return (
     <div className="dashboardpg">
@@ -214,6 +311,7 @@ function Dashboard() {
           <div className="maincon_heading">
             <img src={dashboard_icon} alt=""></img>
             <span>DASHBOARD</span>
+            <span>( {employeedet?.Employee_Name} )</span>
           </div>
           {admintype === "superadmin" ? (
             <>
@@ -320,15 +418,18 @@ function Dashboard() {
                       </div>
                     </div>
                   </div>
-                  <div className="conversion_chart1_second">
-                    <h2 className="barcharthead">
-                      United States Of America ( Student Entry)
-                    </h2>
-                    <Barcharts2 />
-                  </div>
+                  {
+                  // <div className="conversion_chart1_second">
+                  //   <h2 className="barcharthead">
+                  //     United States Of America ( Student Entry)
+                  //   </h2>
+                  //   <Barcharts2 />
+                  // </div>
+                  }
                 </div>
-
-                <div className="conversion_chart2"></div>
+                {
+                // <div className="conversion_chart2"></div>
+                }
               </div>
             </>
           ) : null}
@@ -440,179 +541,343 @@ function Dashboard() {
               </span>
             </div>
           </div>
-          <div className="pg_fourthcon">
-            <div className="App_comp">
-              <p className="appcomp_para">Application Completed</p>
-              {
-                //   <div className="list_con_head table_headfz">
-                //     <div className="name_hd">Name</div>
-                //     <div className="country_hd">Country</div>
-                //     <div className="course_hd">Course</div>
-                //     <div className="doj_hd">DOJ</div>
-                //   </div>
-              }
-              <div className="tbl_app_complete">
-                <table className="appcomp_table">
-                  <thead className="thead_appcomp_table">
-                    <tr className="table_headfz ">
-                      <th className="name_hdw" width="15%">
-                        Name
-                      </th>
-                      <th className="country_hdw" width="15%">
-                        Country
-                      </th>
-                      <th className="course_hdw" width="40%">
-                        Course
-                      </th>
-                      <th className="doj_hdw" width="30%">
-                        DOJ
-                      </th>
-                    </tr>
-                  </thead>
+          {admintype === "superadmin" ? (
+            <div className="pg_fourthcon">
+              <div className="App_comp">
+                <p className="appcomp_para">Application Completed</p>
+                <div className="tbl_app_complete">
+                  <table className="appcomp_table">
+                    <thead className="thead_appcomp_table">
+                      <tr className="table_headfz ">
+                        <th className="name_hdw" width="15%">
+                          Name
+                        </th>
+                        <th className="country_hdw" width="15%">
+                          Country
+                        </th>
+                        <th className="course_hdw" width="40%">
+                          Course
+                        </th>
+                        <th className="doj_hdw" width="30%">
+                          DOJ
+                        </th>
+                      </tr>
+                    </thead>
 
+                    <tbody className="appcomp_tbody">
+                      {applcompleteddata?.map((r, i) => {
+                        return (
+                          <tr key={i} className="tr_app_comp">
+                            <td className="appcomp_th_name table_td">
+                              {r.Students_Name}
+                            </td>
+                            <td className="appcomp_th_country table_td">
+                              {r.Counselling_Country}
+                            </td>
+                            <td className="appcomp_th_course table_td">
+                              {r.Courses}
+                            </td>
+                            <td className="appcomp_th_doj table_td">
+                              
+                              {moment(r.DOJ).format("DD/MM/YYYY")}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div className="stu_irst">
+                <p className="appcomp_para">Student Interest </p>
+                <div className="tbl_std_int_tbody">
+                  <table className="appcomp_table">
+                    <thead>
+                    <tr className="appcomp_tr_th">
+                      <th className="table_SI_headfz">Course</th>
+                      <th className="table_SI_headfz">No of student</th>
+                      <th className="table_SI_headfz">List</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      {studentinterestdata?.map((r, i) => {
+                        return (
+                          <tr key={i}>
+                            <td className="stu_int_td">{r.course}</td>
+                            <td className="stu_int_td">{r.Noofstudents}</td>
+                            <td className="stu_int_td">
+                              <img className="list_img" src={list} alt=""></img>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          ) : null}
+          {admintype === "admin" ? (
+            <div className="pg_fourthcon">
+              <div className="App_comp adminappcmp">
+                <p className="appcomp_para">Application Status</p>
+                <div className="tbl_app_complete">
+                  <table className="appcomp_table">
+                    <thead className="thead_appcomp_table">
+                      <tr className="table_headfz ">
+                        <th className="name_hdw" width="15%">
+                          Name
+                        </th>
+                        <th className="country_hdw" width="15%">
+                          Country
+                        </th>
+                        <th className="course_hdw" width="40%">
+                          Course
+                        </th>
+                        <th className="doj_hdw" width="30%">
+                          DOJ
+                        </th>
+                      </tr>
+                    </thead>
+
+                    <tbody className="appcomp_tbody">
+                      {applcompleteddata?.map((r, i) => {
+                        return (
+                          <tr key={i} className="tr_app_comp">
+                            <th className="appcomp_th_name table_td">
+                              {r.Students_Name}
+                            </th>
+                            <th className="appcomp_th_country table_td">
+                              {r.Counselling_Country}
+                            </th>
+                            <th className="appcomp_th_course table_td">
+                              {r.Courses}
+                            </th>
+                            <th className="appcomp_th_doj table_td">{r.DOJ}</th>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          ) : null}
+
+          <div className="list_con">
+            {admintype === "superadmin" ? (
+              <div className="employee_list ">
+                <p className="appcomp_para"> Employee List</p>
+
+                <div className="tbl_std_int_tbody">
+                  <table className="appcomp_table">
+                    <thead className="thead_appcomp_table">
+                      <tr className="table_headfz ">
+                        <th className="name_hdw" width="30%">
+                          Name
+                        </th>
+                        <th className="country_hdw" width="30%">
+                          Country
+                        </th>
+                        <th className="course_hdw" width="20%">
+                          DOJ
+                        </th>
+                        <th className="doj_hdw" width="20%">
+                          Edit
+                        </th>
+                      </tr>
+                    </thead>
+
+                    <tbody className="appcomp_tbody">
+                      {employeemanagementdata?.map((r, i) => {
+                        return (
+                          <tr key={i} className="tr_app_comp">
+                            <td
+                              className="appcomp_th_name table_td"
+                              width="30%"
+                            >
+                              {r.Employee_Name}
+                            </td>
+                            <td
+                              className="appcomp_th_country table_td"
+                              width="30%"
+                            >
+                              {r.Counselling_Country}
+                            </td>
+
+                            <td className="appcomp_th_doj table_td" width="20%">
+                           
+                              {moment(r.DOJ).format("DD/MM/YYYY")}
+                            </td>
+                            <td width="20%">
+                              <img className="edit_img" src={edit} alt=""></img>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            ) : null}
+            {admintype === "superadmin" ? (
+              <div className="students_list">
+                <p className="appcomp_para"> Student List</p>
+                <div className="tbl_std_int_tbody">
+                  <table className="appcomp_table">
+                    <thead className="thead_appcomp_table">
+                      <tr className="table_headfz ">
+                        <th className="name_hdw" width="30%">
+                          Name
+                        </th>
+                        <th className="country_hdw" width="30%">
+                          Country
+                        </th>
+                        <th className="course_hdw" width="20%">
+                          DOJ
+                        </th>
+                        <th className="doj_hdw" width="20%">
+                          Edit
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="appcomp_tbody">
+                      {studentsmgData?.map((r, i) => {
+                        return (
+                          <tr key={i} className="tr_app_comp">
+                            <td className="appcomp_th_name table_td">
+                              {r.Students_Name}
+                            </td>
+                            <td className="appcomp_th_country table_td">
+                              {r.Counselling_Country}
+                            </td>
+
+                            <td className="appcomp_th_doj table_td">
+                              {
+                                // { new Date(r.DOE).toISOString().split("T")[0] }
+                              }
+                              {moment(r.DOE).format("DD/MM/YYYY")}
+                            </td>
+                            <td>
+                              <img
+                                className="edit_img"
+                                src={approved}
+                                alt=""
+                              ></img>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            ) : null}{" "}
+            ;
+            {
+              //   {admintype === "admin" ? (
+              //     <div className="students_list widthlgstdlt">
+              //       <p className="appcomp_para"> Student List</p>
+              //       <div className="tbl_std_int_tbody">
+              //         <table className="appcomp_table">
+              //           <thead className="thead_appcomp_table">
+              //             <tr className="table_headfz ">
+              //               <th className="name_hdw" width="30%">
+              //                 Student Name
+              //               </th>
+              //               <th className="country_hdw" width="30%">
+              //                 Country
+              //               </th>
+              //               <th className="course_hdw" width="20%">
+              //                 DOE
+              //               </th>
+              //               <th className="doj_hdw" width="20%">
+              //                 Edit
+              //               </th>
+              //             </tr>
+              //           </thead>
+              //           <tbody className="appcomp_tbody">
+              //             {studentsmgData?.map((r, i) => {
+              //               return (
+              //                 <tr key={i} className="tr_app_comp">
+              //                   <td className="appcomp_th_name table_td">
+              //                     {r.Students_Name}
+              //                   </td>
+              //                   <td className="appcomp_th_country table_td">
+              //                     {r.Counselling_Country}
+              //                   </td>
+              //                   <td className="appcomp_th_doj table_td">{r.DOE}</td>
+              //                   <td>
+              //                     <img
+              //                       className="edit_img"
+              //                       src={approved}
+              //                       alt=""
+              //                     ></img>
+              //                   </td>
+              //                 </tr>
+              //               );
+              //             })}
+              //           </tbody>
+              //         </table>
+              //       </div>
+              //     </div>
+              //   ) : null}
+            }
+            {admintype === "admin" ? (
+              <div className="tbl_emp_management brd_2pxred">
+                <p className="appcomp_para"> Student List</p>
+                <table className="emp_mg">
+                  <thead>
+                    <th className="std_name_couns" width="8%">
+                      Student Name{" "}
+                    </th>
+                    <th className="counselor_couns" width="10%">
+                      DOE
+                    </th>
+                    <th className="course_couns" width="10%">
+                      Student id
+                    </th>
+                    <th className="doe_couns" width="13%">
+                      Counselling Country
+                    </th>
+                    <th className="action_couns" width="10%">
+                      Counsellor
+                    </th>
+                    <th className="action_couns" width="15%">
+                      Status
+                    </th>
+                    <th className="action_couns" width="14%">
+                      Courses
+                    </th>
+                  </thead>
                   <tbody className="appcomp_tbody">
-                    {applcompleteddata?.map((r, i) => {
+                    {studentsmgData?.map((r, i) => {
                       return (
-                        <tr key={i} className="tr_app_comp">
-                          <td className="appcomp_th_name table_td">
+                        <tr key={i} className="tr_app_comp tbl_empmg">
+                          <td className="appcomp_th_names table_td" width="14%">
                             {r.Students_Name}
                           </td>
-                          <td className="appcomp_th_country table_td">
+                          <td className="appcomp_th_countrys table_td">
+                            {r.DOE}
+                          </td>
+                          <td className="appcomp_th_courses table_td">
+                            {r.Student_Id}
+                          </td>
+                          <td className="appcomp_th_dojs table_td">
                             {r.Counselling_Country}
                           </td>
-                          <td className="appcomp_th_course table_td">
-                            {r.Courses}
-                          </td>
-                          <td className="appcomp_th_doj table_td">{r.doj}</td>
+                          <td className="table_td">{r.Counsellor}</td>
+                          <td className="table_td">{r.Status}</td>
+                          <td className="table_td">{r.Courses}</td>
                         </tr>
                       );
                     })}
                   </tbody>
                 </table>
               </div>
-            </div>
-            <div className="stu_irst">
-              <p className="appcomp_para">Student Interest </p>
-              <div className="tbl_std_int_tbody">
-                <table className="appcomp_table">
-                  <tr className="appcomp_tr_th">
-                    <th className="table_SI_headfz">Course</th>
-                    <th className="table_SI_headfz">No of student</th>
-                    <th className="table_SI_headfz">List</th>
-                  </tr>
-
-                  <tbody>
-                    {studentinterestdata?.map((r, i) => {
-                      return (
-                        <tr key={i}>
-                          <td className="stu_int_td">{r.course}</td>
-                          <td className="stu_int_td">{r.Noofstudents}</td>
-                          <td className="stu_int_td">
-                            <img className="list_img" src={list} alt=""></img>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            ) : null}
           </div>
-          <div className="list_con">
-            <div className="employee_list ">
-              <p className="appcomp_para"> Employee List</p>
 
-              <div className="tbl_std_int_tbody">
-                <table className="appcomp_table">
-                  <thead className="thead_appcomp_table">
-                    <tr className="table_headfz ">
-                      <th className="name_hdw" width="30%">
-                        Name
-                      </th>
-                      <th className="country_hdw" width="30%">
-                        Country
-                      </th>
-                      <th className="course_hdw" width="20%">
-                        DOJ
-                      </th>
-                      <th className="doj_hdw" width="20%">
-                        Edit
-                      </th>
-                    </tr>
-                  </thead>
-
-                  <tbody className="appcomp_tbody">
-                    {applicationdata?.map((r, i) => {
-                      return (
-                        <tr key={i} className="tr_app_comp">
-                          <td className="appcomp_th_name table_td" width="30%">
-                            {r.name}
-                          </td>
-                          <td
-                            className="appcomp_th_country table_td"
-                            width="30%"
-                          >
-                            {r.country}
-                          </td>
-
-                          <td className="appcomp_th_doj table_td" width="20%">
-                            {r.doj}
-                          </td>
-                          <td width="20%">
-                            <img className="edit_img" src={edit} alt=""></img>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div className="students_list">
-              <p className="appcomp_para"> Student List</p>
-              <div className="tbl_std_int_tbody">
-                <table className="appcomp_table">
-                  <thead className="thead_appcomp_table">
-                    <tr className="table_headfz ">
-                      <th className="name_hdw" width="30%">
-                        Name
-                      </th>
-                      <th className="country_hdw" width="30%">
-                        Country
-                      </th>
-                      <th className="course_hdw" width="20%">
-                        DOJ
-                      </th>
-                      <th className="doj_hdw" width="20%">
-                        Edit
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="appcomp_tbody">
-                    {applicationdata?.map((r, i) => {
-                      return (
-                        <tr key={i} className="tr_app_comp">
-                          <td className="appcomp_th_name table_td">{r.name}</td>
-                          <td className="appcomp_th_country table_td">
-                            {r.country}
-                          </td>
-
-                          <td className="appcomp_th_doj table_td">{r.doj}</td>
-                          <td>
-                            <img
-                              className="edit_img"
-                              src={approved}
-                              alt=""
-                            ></img>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
           <div className="enquiry_list">
             <p className="appcomp_para fz_18"> Enquiry List</p>
 
@@ -630,8 +895,8 @@ function Dashboard() {
                 <th className="doj_hdw" width="20%">
                   Nearest IIEC office
                 </th>
-                <th className="doj_hdw" width="20%">
-                  Preferred mode of counselling
+                <th className="doj_hdw" width="10%">
+                  Counselling mode
                 </th>{" "}
                 <th className="doj_hdw" width="20%">
                   View/Add
@@ -642,6 +907,7 @@ function Dashboard() {
               <table className="appcomp_table tb_enq_list">
                 <tbody>
                   {AllUsersData?.map((r, i) => {
+                    {/* console.log(r) */}
                     return (
                       <tr key={i} className="tr_enq_list">
                         <td className="" width="15%">
@@ -657,10 +923,10 @@ function Dashboard() {
                         <td className="" width="20%">
                           {r.Nearest_iiecofc}
                         </td>
-                        <td className="" width="20%">
+                        <td className="" width="10%">
                           {r.Counselling_mode}
                         </td>
-                        <td width="10%">
+                        <td width="20%">
                           <img
                             className="edit_img"
                             src={edit}
@@ -670,6 +936,10 @@ function Dashboard() {
                           <AiOutlineUserAdd
                             className="useraddicon"
                             onClick={() => AddStudent2()}
+                          />
+                          <GrSchedule
+                            className="useraddicon clr_wht"
+                            onClick={() => AddStdcoun(r)}
                           />
                         </td>
                       </tr>
@@ -822,16 +1092,64 @@ function Dashboard() {
                 </div>
               </div>
             </div>
-            {
-              // <div className="stdenqirydataseconddiv fd_fam">
-              //   <div className="stddatainnerdiv">
-              //     <span>
-              //       <FaMinus />
-              //     </span>
-              //     <span className="stddataspan">{showstddata.First_Name}</span>
-              //   </div>
-              // </div>
-            }
+         
+          </div>
+        </div>
+      )}{" "}
+      ;
+      {stdaddcoun && (
+        <div className="popup_dlt2 topinctobtm" id="counscheduledashid">
+          <h4>Counselling Details</h4>
+          <p>
+            <span>1.Counselling Country</span>
+            <span>
+              <select
+                type="placeholder"
+                className="sltcoun"
+                id="counstdcountry"
+              >
+                <option>U.S.A</option>
+                <option>U.K</option>
+              </select>
+            </span>
+          </p>
+          <p>
+            <span>2.Counselling Date</span>
+            <span>
+              <DatePicker
+                className="datepickercls"
+                selected={startDate}
+                id="counstddate"
+                onChange={(date) => setStartDate(date)}
+              />
+            </span>
+          </p>
+          <p>
+            <span>3.Counselling Time</span>
+
+            <TimePicker
+              className="timepickercls"
+              onChange={onChange}
+              id="counstdtime"
+              value={timevalue}
+            />
+          </p>
+          <p>
+            <span>4.Counsellor Name</span>
+            <span>
+              <input type="placeholder" id="counstddatecounsellor"></input>
+            </span>
+          </p>
+          <div className="dltbtns_popup_div">
+            <button className="Btn_create fz_14px" onClick={() => Setcounstd()}>
+              OK
+            </button>
+            <button
+              className="Btn_create fz_14px"
+              onClick={() => Cancelcounstd()}
+            >
+              Cancel
+            </button>
           </div>
         </div>
       )}

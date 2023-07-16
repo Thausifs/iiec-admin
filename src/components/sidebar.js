@@ -15,7 +15,7 @@ function Sidebar() {
       <ul className="ul_sidebar">
         <li>
           <NavLink
-             to="/"
+             to="/dashboard"
             className={({ isActive }) =>
               isActive ? "selected nav-link" : "nav-link"
             }

@@ -48,7 +48,7 @@ display: flex;
         box-shadow: -8px 8px 16px rgba(19, 19, 19, 0.2), 8px -8px 16px rgba(19, 19, 19, 0.2), -8px -8px 16px rgba(63, 63, 63, 0.9), 8px 8px 20px rgba(19, 19, 19, 0.9), inset 1px 1px 2px rgba(63, 63, 63, 0.3), inset -1px -1px 2px rgba(19, 19, 19, 0.5);
         border-radius: 20px;
        
-        
+        max-height: 50%;
         
 }
 .univcon_first:hover , .univcon_second:hover , .univcon_third:hover , .univcon_fourth:hover { 
@@ -86,4 +86,13 @@ display: flex;
 .notespan {
     font-weight: 700;
         font-size: 1.4em;
+}
+.counselling_head button {
+    width: 131px;
+        height: 38px;
+        background: #C63638;
+        border-radius: 10px;
+        border: none;
+        outline: none;
+        box-shadow: var(--box-shadow1);
 }

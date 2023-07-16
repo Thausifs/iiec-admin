@@ -83,3 +83,25 @@
 .empbtn_addemp {
     display: none;
 }
+.exportbtn_excel {
+    color: white;
+    font-family: 'Montserrat';
+    font-size: 1em;
+    font-weight: 400;
+    
+}
+.exportbtn_excel:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+.emailinpempmg {
+    width: 86%;
+    margin-left: 7%;
+}
+.emailplcdml {
+    margin-left: 7%;
+}
+.editidspn {
+    color: rgb(114, 111, 111);
+    margin-left: 20px;
+}

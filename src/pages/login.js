@@ -6,16 +6,21 @@ import { VscLock } from "react-icons/vsc";
 import { BiUser } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 function Login() {
   const [Employeeid, setEmployeeid] = useState("");
   const [password, setpassword] = useState("");
+    const navigate = useNavigate();
   //   const [login, setlogin] = useState("");
   let auth = localStorage.getItem("Employee_Id");
-
+  
   if (auth) {
-    return <Navigate to="/dashboard" />;
+    navigate("/dashboard")
+  
   }
+
+ 
   const handleLogin = async () => {
     if (!Employeeid) {
       alert("Please Enter Employee Id");
@@ -30,11 +35,12 @@ function Login() {
         .post(`${process.env.REACT_APP_SERVER}/admin/employeelogin`, obj)
         .then(function (response) {
           if (response.data.message === "Employee login sucessful") {
-            localStorage.setItem("Employee_Id", obj.Employee_Id);
-            localStorage.setItem("Employee_Type", response.data.Data);
+            console.log(response.data);
+            localStorage.setItem("Employee_Id", response.data.Data.Employee_Id);
+            localStorage.setItem("Employee_Type", response.data.Data.Type);
 
             alert(response.data.message);
-            return window.location.reload();
+            return  navigate("/dashboard")
           } else if (
             response.data.message ===
             "Authentication failed , Password didn't match"

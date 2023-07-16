@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import Header from "../components/header";
 import "../styles/reports.css";
 import Sidebar from "../components/sidebar";
-import { studentmanagementdata } from "../data";
 import reports_icon from "../asserts/images/reports_icon.png";
 import { employeemanagementdata } from "../data";
+import { Studentdata , EmployeeData} from "../apis/admin";
 // import InputPlaceholder from "../components/inputplaceholder";
 import editfile from "../asserts/images/editfile.png";
 import { Navigate } from "react-router-dom";
@@ -12,7 +12,30 @@ import { Navigate } from "react-router-dom";
 function Reports() {
   const [showstdreports, setshowstdreports] = useState(true);
   const [showempreports, setshowempreports] = useState(false);
-  
+  const [studentsmgData, setstudentsmgData] = useState([]);
+  const [employeemgData, setemployeemgData] = useState([]);
+  useEffect(() => {
+    StudentData();
+    EmployeesData();
+  }, []);
+  const StudentData = async () => {
+    try {
+      var data = await Studentdata();
+
+      setstudentsmgData(data);
+      
+    } catch (error) {
+      console.log("error while fetching data");
+    }
+  };
+    const EmployeesData = async () => {
+      try {
+        var data = await EmployeeData();
+        setemployeemgData(data);     
+      } catch (error) {
+        console.log("error while fetching data");
+      }
+    };
  const admintype = localStorage.getItem("Employee_Type");
  if (!admintype) {
    return <Navigate to="/" />;
@@ -47,10 +70,18 @@ function Reports() {
             <span>Reports</span>
           </div>
           <div>
-            <button className="std_btn" id="std_btnid" onClick={() => Stdreports()}>
+            <button
+              className="std_btn"
+              id="std_btnid"
+              onClick={() => Stdreports()}
+            >
               Students
             </button>
-            <button className="emp_btn" id="emp_btnid" onClick={() => EmpReports()}>
+            <button
+              className="emp_btn"
+              id="emp_btnid"
+              onClick={() => EmpReports()}
+            >
               Employees
             </button>
           </div>
@@ -113,24 +144,24 @@ function Reports() {
                     </th>
                   </thead>
                   <tbody className="appcomp_tbody">
-                    {studentmanagementdata?.map((r, i) => {
+                    {studentsmgData?.map((r, i) => {
                       return (
                         <tr key={i} className="tr_app_comp tbl_empmg">
                           <td className="appcomp_th_names table_td" width="20%">
-                            {r.Employee_Name}
+                            {r.Students_Name}
                           </td>
                           <td className="appcomp_th_countrys table_td">
-                            {r.DOJ}
+                            {new Date(r.DOE).toISOString().split("T")[0]}
                           </td>
                           <td className="appcomp_th_courses table_td">
-                            {r.Employee_id}
+                            {r.Student_Id}
                           </td>
                           <td className="appcomp_th_dojs table_td">
-                            {r.counselling_Country}
+                            {r.Counselling_Country}
                           </td>
-                          <td className="table_td">{r.counsellor}</td>
+                          <td className="table_td">{r.Counsellor}</td>
                           <td className="table_td">{r.Status}</td>
-                          <td className="table_td">{r.course}</td>
+                          <td className="table_td">{r.Courses}</td>
                         </tr>
                       );
                     })}
@@ -195,7 +226,7 @@ function Reports() {
                     </th>
                   </thead>
                   <tbody className="appcomp_tbody">
-                    {employeemanagementdata?.map((r, i) => {
+                    {employeemgData?.map((r, i) => {
                       return (
                         <tr key={i} className="tr_app_comp tbl_empmg">
                           <td className="appcomp_th_names table_td" width="15%">
@@ -205,20 +236,23 @@ function Reports() {
                             className="appcomp_th_countrys table_td"
                             width="10%"
                           >
-                            {r.DOJ}
+                            {new Date(r.DOJ).toISOString().split("T")[0]}
+                            {/* {r.DOJ} */}
                           </td>
                           <td
                             className="appcomp_th_courses table_td"
                             width="15%"
                           >
-                            {r.Employee_id}
+                            {r.Employee_Id}
                           </td>
                           <td className="appcomp_th_dojs table_td" width="20%">
-                            {r.counselling_Country}
+                            {r.Counselling_Country}
                           </td>
 
                           <td className="table_td" width="20%">
-                            {r.No_of_students}
+                            {
+                            1
+                            }
                           </td>
                           <td width="20%">
                             <img
@@ -236,7 +270,6 @@ function Reports() {
               </div>
             </div>
           )}
-          
         </div>
       </div>
     </div>
