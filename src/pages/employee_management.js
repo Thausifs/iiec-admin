@@ -68,9 +68,17 @@ function EmployeeManagement() {
       // let password = document.getElementById("password").value;
       let image = document.getElementById("btn_choose_inputemp").files[0];
 
+      if(image === undefined){
+        return alert("Please Upload image");
+      }
+      if(!Employee_name || !Employee_Email || !Doj || !Employee_id|| !Counselling_Country || !Location || !image){
+        return alert("Please Enter All Required Fields");
+      }
+
       if (image.size >= 2097152) {
         return alert("images should be less than 2mb");
       }
+    
       // if (Employee_name !== String) {
 
       // }
@@ -359,10 +367,11 @@ function EmployeeManagement() {
             />
           </div>
           <InputPlaceholder
-            placehld="Employee_Name"
+            placehld="Employee_Name*"
             id="employee_name"
+            type="text"
           ></InputPlaceholder>
-          <p className="placeholdertitle emailplcdml">Employee_Email</p>
+          <p className="placeholdertitle emailplcdml">Employee_Email*</p>
           <input
             type="email"
             placeholder=""
@@ -372,7 +381,7 @@ function EmployeeManagement() {
             className="placeholderinput emailinpempmg"
           ></input>
 
-          <p className="placeholdertitle ml_7per">DOJ</p>
+          <p className="placeholdertitle ml_7per">DOJ*</p>
           <DatePicker
             className="datepickercls stdmgdatepicker"
             selected={selectedDate}
@@ -381,11 +390,13 @@ function EmployeeManagement() {
             id="DOE"
           ></DatePicker>
           <InputPlaceholder
-            placehld="Employee_Id"
+            placehld="Employee_Id*"
             id="employee_id"
+            type="number"
+            min="0"
             placeholder="Numbers are only allowed"
           ></InputPlaceholder>
-          <p className="placeholdertitle ml_7per">Counselling Country</p>
+          <p className="placeholdertitle ml_7per">Counselling Country*</p>
           <select
             className="placeholderinput attendance_selecttag"
             id="counselling_country"
@@ -407,7 +418,7 @@ function EmployeeManagement() {
             <option>Sweden</option>
             <option>Germany</option>
           </select>
-          <p className="placeholdertitle ml_7per">Branch</p>
+          <p className="placeholdertitle ml_7per">Branch*</p>
           <select
             className="placeholderinput attendance_selecttag"
             id="location"
@@ -436,7 +447,7 @@ function EmployeeManagement() {
           }
           <div style={{ display: "flex" }}>
             <div style={{ width: "30%", margin: "4% 2% 2% 7%" }}>
-              <p className="emp_photo">Employee Photo</p>
+              <p className="emp_photo">Employee Photo*</p>
               <input
                 type="file"
                 className="btn_chooseinp"

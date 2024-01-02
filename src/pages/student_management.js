@@ -81,6 +81,9 @@ function StudentManagement() {
       if (!Image) {
         return alert("please add image ");
       }
+      if(!Student_Name || !DOE || !Student_Id || !Counselling_Country|| !Emp_id || !Status || !Courses ){
+        return alert("Please Enter All Required Fields");
+      }
       if (Image.size >= 2097152) {
         return alert("images should be less than 2mb");
       }
@@ -359,10 +362,10 @@ function StudentManagement() {
             />
           </div>
           <InputPlaceholder
-            placehld="Student Name"
+            placehld="Student Name*"
             id="Student_Name"
           ></InputPlaceholder>
-          <p className="placeholdertitle ml_7per">DOE</p>
+          <p className="placeholdertitle ml_7per">DOE*</p>
           <DatePicker
             className="datepickercls stdmgdatepicker"
             selected={selectedDate}
@@ -372,12 +375,14 @@ function StudentManagement() {
           ></DatePicker>
 
           <InputPlaceholder
-            placehld="Student Id"
+            placehld="Student Id*"
             id="Student_Id"
+            type="number"
+            min="0"
             placeholder="Numbers are only allowed"
           ></InputPlaceholder>
          
-          <p className="placeholdertitle ml_7per">Counselling Country</p>
+          <p className="placeholdertitle ml_7per">Counselling Country*</p>
           <select
             className="placeholderinput attendance_selecttag"
             id="Counselling_Country"
@@ -401,7 +406,7 @@ function StudentManagement() {
             <option value="Germany">Germany</option>
           </select>
           <div className="inp_coun_stdmg">
-            <p className="placeholdertitle att_placehld">Counsellor</p>
+            <p className="placeholdertitle att_placehld">Counsellor*</p>
             <select
               id="Counsellor"
               className="placeholderinput attendance_selecttag"
@@ -426,7 +431,7 @@ function StudentManagement() {
               })}
             </select>
           </div>
-          <p className="placeholdertitle att_placehld">Status</p>
+          <p className="placeholdertitle att_placehld">Status*</p>
           <select
             name="Statusss"
             id="Status"
@@ -440,11 +445,11 @@ function StudentManagement() {
               Joining Date Finalised
             </option>
           </select>
-          <InputPlaceholder placehld="Courses" id="Courses"></InputPlaceholder>
+          <InputPlaceholder placehld="Courses*" id="Courses"></InputPlaceholder>
 
           <div style={{ display: "flex" }} className="chosefilediv">
             <div style={{ width: "30%", margin: "4% 2% 2% 7%" }}>
-              <p className="emp_photo">Student Photo</p>
+              <p className="emp_photo">Student Photo*</p>
               <input
                 type="file"
                 className="btn_chooseinp"
