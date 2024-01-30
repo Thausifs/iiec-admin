@@ -76,6 +76,7 @@ function StudentManagement() {
       let Image = document.getElementById("btn_choose_input").files[0];
       let counsellordata = employeemanagementdata?.filter((r)=> r.Employee_Id === Emp_id )
       let Counsellor = counsellordata[0].Employee_Name;
+      let DOJ = new Date();
        
       
       if (!Image) {
@@ -99,6 +100,7 @@ function StudentManagement() {
       StdData.append("Courses", Courses);
       StdData.append("Image", Image);
        StdData.append("Emp_Id", Emp_id);
+       StdData.append("DOJ", DOJ);
      
       var Createstudent = await CreateStudent(StdData);
       const dataresponse = Createstudent;
@@ -590,7 +592,7 @@ function StudentManagement() {
             className="datepickercls stdmgdatepicker"
             selected={selectedDateeditDOJ}
             onChange={(date) => setselectedDateeditDOJ(date)}
-            dateFormat="dd/MM/yyyy"
+            // dateFormat="dd/MM/yyyy"
             id="stdmgdoj"
           ></DatePicker>
 
